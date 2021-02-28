@@ -1,6 +1,5 @@
 import Entity from "./Entity";
 import Component from "./Component";
-import Transform from "./components/Transform";
 
 export default class GameObject extends Entity {
   public components: Array<Component> = [];
@@ -22,7 +21,7 @@ export default class GameObject extends Entity {
   }
 
   public getComponent(component: typeof Component) {
-    return this.components.filter((c) => c instanceof component);
+    return this.components.filter((c) => c instanceof component)[0];
   }
 
   public setParent(gameObject: GameObject) {
@@ -30,10 +29,10 @@ export default class GameObject extends Entity {
   }
 
   public static find(name: string) {
-    const [{ obj }] = this._entities.filter(
-      (entity) => entity.name === name && entity.obj instanceof GameObject
+    const [{ instance }] = this._entities.filter(
+      (entity) => entity.name === name && entity.instance instanceof GameObject
     );
 
-    return obj as GameObject;
+    return instance as GameObject;
   }
 }

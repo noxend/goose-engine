@@ -10,11 +10,6 @@ class Transform extends Component {
 
     this.position = new Vector();
   }
-
-  // setPosition(vector: Vector)
-  setPosition(x: number, y: number) {
-    this.position.set(x, y);
-  }
 }
 
 export default Transform;
