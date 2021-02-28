@@ -14,7 +14,9 @@ abstract class Entity implements Entity {
   }
 
   public static destroy(entity: Entity) {
-    Entity._entities = Entity._entities.filter(({ name }) => name !== entity.name);
+    Entity._entities = Entity._entities.filter(
+      ({ name }) => name !== entity.name
+    );
   }
 
   public static update(dt: number) {

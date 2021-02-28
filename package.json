@@ -18,6 +18,7 @@
     "webpack-dev-server": "^3.11.0"
   },
   "dependencies": {
+    "eventemitter3": "^4.0.7",
     "fork-ts-checker-webpack-plugin": "^5.2.1",
     "html-webpack-plugin": "^4.5.0"
   }
