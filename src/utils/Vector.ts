@@ -82,6 +82,10 @@ export default class Vector {
     return this;
   }
 
+  static lerp(a: Vector, b: Vector, n: number) {
+    return new Vector(a.x + (b.x - a.x) * n, a.y + (b.y - a.y) * n);
+  }
+
   static distance = (vec1: Vector, vec2: Vector): number =>
     Vector.calculateDist(vec1, vec2);
 

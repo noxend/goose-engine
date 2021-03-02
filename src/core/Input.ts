@@ -1,3 +1,5 @@
+import Vector from "../utils/Vector";
+
 export enum KeyboardKey {
   SPACE = " ",
   ARROW_UP = "arrowup",
@@ -15,44 +17,49 @@ export enum Axis {
   VERTICAL,
 }
 
-class Input {
-  private keyboardKeys: Map<KeyboardKey, KeyboardEvent>;
+abstract class Input {
+  private static readonly keyboardKeys = new Map<KeyboardKey, KeyboardEvent>();
+  public static readonly mousePosition = new Vector();
 
-  constructor() {
-    this.keyboardKeys = new Map<KeyboardKey, KeyboardEvent>();
-
+  public static _initialize() {
     addEventListener("keydown", (e) => {
-      this.keyboardKeys.set(this.transformKeyName(e.key), e);
+      Input.keyboardKeys.set(Input.transformKeyName(e.key), e);
     });
 
     addEventListener("keyup", (e) => {
-      this.keyboardKeys.delete(this.transformKeyName(e.key));
+      Input.keyboardKeys.delete(Input.transformKeyName(e.key));
     });
+
+    addEventListener("mousemove", (e) => {
+      Input.mousePosition.set(e.clientX, e.clientY);
+    });
+
+    return Input;
   }
 
-  public getAxis(axis: Axis) {
+  public static getAxis(axis: Axis) {
     if (axis === Axis.HORIZONTAL) {
       if (
-        this.isKeyPressed(KeyboardKey.ARROW_RIGHT) ||
-        this.isKeyPressed(KeyboardKey.D)
+        Input.isKeyPressed(KeyboardKey.ARROW_RIGHT) ||
+        Input.isKeyPressed(KeyboardKey.D)
       )
         return 1;
       if (
-        this.isKeyPressed(KeyboardKey.ARROW_LEFT) ||
-        this.isKeyPressed(KeyboardKey.A)
+        Input.isKeyPressed(KeyboardKey.ARROW_LEFT) ||
+        Input.isKeyPressed(KeyboardKey.A)
       )
         return -1;
     }
 
     if (axis === Axis.VERTICAL) {
       if (
-        this.isKeyPressed(KeyboardKey.ARROW_DOWN) ||
-        this.isKeyPressed(KeyboardKey.S)
+        Input.isKeyPressed(KeyboardKey.ARROW_DOWN) ||
+        Input.isKeyPressed(KeyboardKey.S)
       )
         return 1;
       if (
-        this.isKeyPressed(KeyboardKey.ARROW_UP) ||
-        this.isKeyPressed(KeyboardKey.W)
+        Input.isKeyPressed(KeyboardKey.ARROW_UP) ||
+        Input.isKeyPressed(KeyboardKey.W)
       )
         return -1;
     }
@@ -60,10 +67,11 @@ class Input {
     return 0;
   }
 
-  public isKeyPressed = (key: KeyboardKey) => this.keyboardKeys.has(key);
+  public static isKeyPressed = (key: KeyboardKey) =>
+    Input.keyboardKeys.has(key);
 
-  private transformKeyName = (key: string) =>
+  private static transformKeyName = (key: string) =>
     key.toLocaleLowerCase() as KeyboardKey;
 }
 
-export default new Input();
+export default Input._initialize();
