@@ -1,19 +1,22 @@
 import Vector from '../../utils/Vector'
 import { Component } from '../Component'
+import { Time } from '../Time'
+
+type PhysicalBodySettings = {
+  mass?: number
+  gravityForce?: number
+  position: Vector
+  velocity: Vector
+}
 
 export class PhysicalBody extends Component {
-  public mass: number
-  public gravityForce: number
-  public position: Vector
-  public velocity: Vector
+  public mass = 1
+  public gravityForce = 10
+  public position = new Vector()
+  public velocity = new Vector()
 
-  // public angularVelocity: number;
-  // public centerOfMass: number;
-
-  public init() {
-    this.mass = 1
-    this.gravityForce = 10
-    this.position = new Vector()
-    this.velocity = new Vector()
+  public update() {
+    this.velocity.y += this.gravityForce
+    this.entity.position.y += this.velocity.y * Time.deltaTime
   }
 }

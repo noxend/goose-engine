@@ -20,6 +20,7 @@ export enum Axis {
 class Input {
   private static readonly keyboardKeys = new Map<KeyboardKey, KeyboardEvent>()
   public static readonly mousePosition = new Vector()
+  public static mouseButtonDown = 0
 
   public static _initialize() {
     addEventListener('keydown', (e) => {
@@ -32,6 +33,14 @@ class Input {
 
     addEventListener('mousemove', (e) => {
       Input.mousePosition.set(e.clientX, e.clientY)
+    })
+
+    addEventListener('mousedown', (e) => {
+      Input.mouseButtonDown = 1
+    })
+
+    addEventListener('mouseup', (e) => {
+      Input.mouseButtonDown = 0
     })
 
     return Input

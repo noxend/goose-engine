@@ -6,15 +6,13 @@ export class Entity {
   public position = new Vector()
   public componentsInstances: Array<Component> = []
   public parent: Entity | null = null
+  public manager: EntityManager
 
-  constructor(
-    public name: string,
-    public manager: EntityManager,
-    components: Array<typeof Component> = []
-  ) {
+  constructor(public name: string, components: Array<typeof Component> = []) {
     for (const component of components) {
       this.addComponent(component)
     }
+
     this.init()
   }
 

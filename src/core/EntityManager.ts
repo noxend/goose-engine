@@ -4,10 +4,9 @@ import { Component } from './Component'
 export class EntityManager {
   public entities: Entity[] = []
 
-  public add(object: typeof Entity, components?: Array<typeof Component>, name?: string) {
-    const instance = new object(name || object.name, this, components)
-    this.entities.push(instance)
-    return instance
+  public add(entity: Entity) {
+    entity.manager = this
+    this.entities.push(entity)
   }
 
   public destroy(entity: Entity) {
