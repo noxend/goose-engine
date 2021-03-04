@@ -1,8 +1,8 @@
-import Entity from "./Entity";
-import GameObject from "./GameObject";
+import { Entity } from './Entity'
 
-export default class Component extends Entity {
-  constructor(name: string, public gameObject: GameObject) {
-    super(name);
-  }
+export class Component {
+  constructor(public parentEntity: Entity) {}
+
+  init() {}
+  update() {}
 }

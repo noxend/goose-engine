@@ -1,30 +1,52 @@
-interface Entity {
-  update?(deltaTime: number): void;
-}
+import Vector from '../utils/Vector'
+import { EntityManager } from './EntityManager'
+import { Component } from './Component'
 
-abstract class Entity implements Entity {
-  public static _entities: Array<{ name: string; instance: Entity }> = [];
+export class Entity {
+  public position = new Vector()
+  public componentsInstances: Array<Component> = []
+  public parent: Entity | null = null
 
-  constructor(public name: string) {
-    Entity._entities.push({ name, instance: this });
+  constructor(
+    public name: string,
+    public manager: EntityManager,
+    components: Array<typeof Component> = []
+  ) {
+    for (const component of components) {
+      this.addComponent(component)
+    }
+    this.init()
+  }
+
+  public addComponent(component: typeof Component): Component {
+    const instance = new component(this)
+    this.componentsInstances.push(instance)
+    return instance
+  }
+
+  public getComponent(component: typeof Component) {
+    return this.componentsInstances.filter((c) => c instanceof component)[0]
   }
 
   public destroy() {
-    Entity.destroy(this);
+    this.manager.destroy(this)
   }
 
-  public static destroy(entity: Entity) {
-    Entity._entities = Entity._entities.filter(
-      ({ name }) => name !== entity.name
-    );
+  public update() {
+    for (const component of this.componentsInstances) {
+      component.update()
+    }
   }
 
-  public static update(dt: number) {
-    for (const { instance } of Entity._entities) {
-      if (!instance.update) continue;
-      instance.update(dt);
+  public setParent(entity: Entity) {
+    if (this !== entity) {
+      this.parent = entity
+    }
+  }
+
+  public init() {
+    for (const component of this.componentsInstances) {
+      component.init()
     }
   }
 }
-
-export default Entity;
