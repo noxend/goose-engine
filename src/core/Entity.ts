@@ -1,30 +1,30 @@
-interface Entity {
-  update?(deltaTime: number): void;
-}
+import Vector from "../utils/Vector";
+import { EntityManager } from "./EntityManager";
+import { Component } from "./Component";
 
-abstract class Entity implements Entity {
-  public static _entities: Array<{ name: string; instance: Entity }> = [];
+export class Entity {
+  components: Map<typeof Component, Component>;
 
-  constructor(public name: string) {
-    Entity._entities.push({ name, instance: this });
+  constructor(
+    public name: string,
+    public manager: EntityManager,
+    public position: Vector
+  ) {
+    this.components = new Map();
   }
+
+  public transform: Vector;
 
   public destroy() {
-    Entity.destroy(this);
+    this.manager.destroy(this);
   }
 
-  public static destroy(entity: Entity) {
-    Entity._entities = Entity._entities.filter(
-      ({ name }) => name !== entity.name
-    );
+  public addComponent(C: typeof Component, params?: any) {
+    this.manager.addComponentToEntity(this, C, params);
+    return this;
   }
 
-  public static update(dt: number) {
-    for (const { instance } of Entity._entities) {
-      if (!instance.update) continue;
-      instance.update(dt);
-    }
+  public getComponent(C: typeof Component) {
+    return this.components.get(C);
   }
 }
-
-export default Entity;
