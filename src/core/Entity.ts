@@ -3,7 +3,7 @@ import { EntityManager } from "./EntityManager";
 import { Component } from "./Component";
 
 export class Entity {
-  components: Map<typeof Component, Component>;
+  public components: Map<typeof Component, Component>;
 
   constructor(
     public name: string,

@@ -39,7 +39,7 @@ export class EntityManager {
     this.componentManager.register(entity, C, params);
   }
 
-  public update() {
+  public update(dt: number) {
     while (this.entitiesToDestroy.length > 0) {
       const entity = this.entitiesToDestroy.pop();
       this.componentManager.components = this.componentManager.components.filter(
@@ -47,7 +47,7 @@ export class EntityManager {
       );
     }
 
-    this.componentManager.update();
+    this.componentManager.update(dt);
   }
 
   public init() {

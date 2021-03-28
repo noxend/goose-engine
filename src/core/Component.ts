@@ -2,8 +2,6 @@ import { Entity } from "./Entity";
 import { ComponentManager } from "./ComponentManager";
 
 export class Component {
-  [k: string]: any;
-
   public ID: number;
 
   constructor(
@@ -11,6 +9,7 @@ export class Component {
     public manager: ComponentManager,
     params: any
   ) {
+    this.awake();
     for (const key in params) {
       if (Object.prototype.hasOwnProperty.call(params, key)) {
         this[key] = params[key];
@@ -18,6 +17,9 @@ export class Component {
     }
   }
 
+  awake() {}
   init() {}
-  update() {}
+  update(dt: number) {}
+
+  [k: string]: any;
 }
