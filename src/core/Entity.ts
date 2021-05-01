@@ -5,6 +5,9 @@ import { Component } from "./Component";
 export class Entity {
   public components: Map<typeof Component, Component>;
 
+  public velocity = new Vector();
+  public old_position = new Vector();
+
   constructor(
     public name: string,
     public manager: EntityManager,
