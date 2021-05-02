@@ -13,7 +13,7 @@ module.exports = {
         use: "ts-loader",
       },
       {
-        test: /\.(png)$/i,
+        test: /\.(png|wav)$/i,
         use: [
           {
             loader: "file-loader",

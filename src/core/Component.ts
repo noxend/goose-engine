@@ -1,8 +1,14 @@
 import { Entity } from "./Entity";
 import { ComponentManager } from "./ComponentManager";
 
+type A = {
+  volume: number;
+  [k: string]: any;
+};
+
 export class Component {
   public ID: number;
+  static defaultParams: any;
 
   constructor(
     public entity: Entity,
