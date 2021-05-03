@@ -1,11 +1,6 @@
 import { Entity } from "./Entity";
 import { ComponentManager } from "./ComponentManager";
 
-type A = {
-  volume: number;
-  [k: string]: any;
-};
-
 export class Component {
   public ID: number;
   static defaultParams: any;
@@ -18,6 +13,7 @@ export class Component {
     this.awake();
     for (const key in params) {
       if (Object.prototype.hasOwnProperty.call(params, key)) {
+        // @ts-ignore
         this[key] = params[key];
       }
     }
@@ -26,6 +22,4 @@ export class Component {
   awake() {}
   init() {}
   update(dt: number) {}
-
-  [k: string]: any;
 }

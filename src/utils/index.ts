@@ -5,3 +5,6 @@ export const createElement = (name: string, value?: string) => {
   node.textContent = value || "";
   return debugPanel.appendChild(node);
 };
+
+export const range = (from: number, to: number, step = 1) =>
+  Array.from({ length: (to - from) / step + 1 }, (_, i) => from + i * step);

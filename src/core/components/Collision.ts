@@ -3,13 +3,6 @@ import { createElement } from "../../utils";
 import Vector from "../../utils/Vector";
 import { Component } from "../Component";
 
-const defaultParams = new Map<string, any>([
-  ["size", new Vector(100, 100)],
-  ["center", new Vector()],
-  ["debug", false],
-  ["active", false],
-]);
-
 const position_x = createElement("position_x", "");
 const position_y = createElement("position_x", "");
 
@@ -24,10 +17,6 @@ export class Collision extends Component {
   private debug: boolean;
 
   awake() {
-    defaultParams.forEach((value, key) => {
-      if (!this[key]) this[key] = value;
-    });
-
     this.evens = new EventEmitter();
   }
 
@@ -182,12 +171,17 @@ export class Collision extends Component {
     return this.entity.position.y > this.entity.old_position.y;
   }
 
+  public active: boolean;
+  public static: boolean;
+  public trigger: boolean;
+  public type: string;
+
   update(dt: number) {
     const collisions: Collision[] = [];
 
     if (this.active) {
       if (!this?.static) {
-        this.entity.velocity.y += 30 * dt;
+        this.entity.velocity.y += 50 * dt;
       }
 
       this.entity.old_position.x = this.entity.position.x;

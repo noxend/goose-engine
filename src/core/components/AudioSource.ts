@@ -3,6 +3,9 @@ import { Component } from "../Component";
 export class AudioSource extends Component {
   public audio: HTMLAudioElement;
 
+  public src: string;
+  public volume: number;
+
   init() {
     this.audio = new Audio(this.src);
     this.audio.volume = this.volume;
