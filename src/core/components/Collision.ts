@@ -209,11 +209,11 @@ export class Collision extends Component {
       }
 
       if (this.entity.name === "player") {
-        position_x.textContent = `X: ${this.entity.position.x.toFixed(2)}`;
-        position_y.textContent = `Y: ${this.entity.position.y.toFixed(2)}`;
+        position_x.textContent = `Pos X: ${this.entity.position.x.toFixed(2)}`;
+        position_y.textContent = `Pos Y: ${this.entity.position.y.toFixed(2)}`;
 
-        velocity_x.textContent = this.entity.velocity.x.toFixed(2);
-        velocity_y.textContent = this.entity.velocity.y.toFixed(2);
+        velocity_x.textContent = `Vel X: ${this.entity.velocity.x.toFixed(2)}`;
+        velocity_y.textContent = `Vel Y: ${this.entity.velocity.y.toFixed(2)}`;
       }
     }
 
