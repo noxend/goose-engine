@@ -24,6 +24,9 @@ module.exports = {
   },
   devtool: "source-map",
   resolve: {
+    alias: {
+      src: path.resolve(__dirname, "src/"),
+    },
     extensions: [".ts", ".js"],
   },
   output: {

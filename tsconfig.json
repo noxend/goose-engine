@@ -3,7 +3,7 @@
   "exclude": ["node_modules", "dist"],
   "compilerOptions": {
     "target": "ESNext",
-    "module": "CommonJS",
+    "module": "ESNext",
     "allowJs": true,
     "sourceMap": true,
     "strict": true,
@@ -11,8 +11,9 @@
     "removeComments": true,
     "outDir": "./dist",
     "strictPropertyInitialization": false,
-    "baseUrl": "./src",
     "esModuleInterop": true,
-    "skipLibCheck": true
+    "skipLibCheck": true,
+    "moduleResolution": "Node",
+    "baseUrl": "src"
   }
 }
