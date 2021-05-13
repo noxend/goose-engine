@@ -42,12 +42,13 @@ export class EntityManager {
   public update(dt: number) {
     while (this.entitiesToDestroy.length > 0) {
       const entity = this.entitiesToDestroy.pop();
-      this.componentManager.components = this.componentManager.components.filter(
-        (c) => c.entity !== entity
-      );
+      this.componentManager.components =
+        this.componentManager.components.filter((c) => c.entity !== entity);
     }
 
-    this.componentManager.update(dt);
+    for (let i = 0; i < this.entities.length; i++) {
+      this.entities[i].update(dt);
+    }
   }
 
   public init() {
