@@ -30,4 +30,8 @@ export class Entity {
   public getComponent(C: typeof Component) {
     return this.components.get(C);
   }
+
+  public update(dt: number) {
+    this.components.forEach((c) => c.update(dt));
+  }
 }
