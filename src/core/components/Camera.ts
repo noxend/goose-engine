@@ -21,7 +21,9 @@ export class Camera extends Component {
     );
 
     for (let i = 0; i < entities.length; i++) {
-      entities[i].position.sub(this.entity.position);
+      // entities[i].position.sub(this.entity.position);
+      entities[i].position.x -= this.entity.position.x;
+      entities[i].position.y -= this.entity.position.y;
     }
   }
 }

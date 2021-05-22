@@ -74,12 +74,12 @@ export class Collision extends Component {
     if (this.isMovingLeft) {
       if (
         this.left < target.right &&
-        this.entity.old_position.x >= target.right &&
+        this.entity.oldPosition.x >= target.right &&
         this.top < target.bottom &&
         this.bottom > target.top
       ) {
         this.entity.velocity.x = 0;
-        this.entity.old_position.x = this.entity.position.x = target.right;
+        this.entity.oldPosition.x = this.entity.position.x = target.right;
 
         return true;
       }
@@ -92,12 +92,12 @@ export class Collision extends Component {
     if (this.isMovingUp) {
       if (
         this.top < target.bottom &&
-        this.entity.old_position.y >= target.bottom &&
+        this.entity.oldPosition.y >= target.bottom &&
         this.left < target.right &&
         this.right > target.left
       ) {
         this.entity.velocity.y = 0;
-        this.entity.old_position.y = this.entity.position.y = target.bottom;
+        this.entity.oldPosition.y = this.entity.position.y = target.bottom;
 
         return true;
       }
@@ -110,12 +110,12 @@ export class Collision extends Component {
     if (this.entity.velocity.x > 0) {
       if (
         this.right > target.left &&
-        this.entity.old_position.x <= target.left &&
+        this.entity.oldPosition.x <= target.left &&
         this.top < target.bottom &&
         this.bottom > target.top
       ) {
         this.entity.velocity.x = 0;
-        this.entity.old_position.x = this.entity.position.x =
+        this.entity.oldPosition.x = this.entity.position.x =
           target.left - this.size.x;
 
         return true;
@@ -133,12 +133,12 @@ export class Collision extends Component {
     if (this.isMovingDown) {
       if (
         this.bottom > target.top &&
-        this.entity.old_position.y <= target.top &&
+        this.entity.oldPosition.y <= target.top &&
         this.left < target.right &&
         this.right > target.left
       ) {
         this.entity.velocity.y = 0;
-        this.entity.old_position.y = this.entity.position.y =
+        this.entity.oldPosition.y = this.entity.position.y =
           target.top - this.size.y;
 
         return true;
@@ -150,25 +150,25 @@ export class Collision extends Component {
 
   get isMoving() {
     return (
-      this.entity.position.x !== this.entity.old_position.x ||
-      this.entity.position.y !== this.entity.old_position.y
+      this.entity.position.x !== this.entity.oldPosition.x ||
+      this.entity.position.y !== this.entity.oldPosition.y
     );
   }
 
   get isMovingRight() {
-    return this.entity.position.x > this.entity.old_position.x;
+    return this.entity.position.x > this.entity.oldPosition.x;
   }
 
   get isMovingLeft() {
-    return this.entity.position.x < this.entity.old_position.x;
+    return this.entity.position.x < this.entity.oldPosition.x;
   }
 
   get isMovingUp() {
-    return this.entity.position.y < this.entity.old_position.y;
+    return this.entity.position.y < this.entity.oldPosition.y;
   }
 
   get isMovingDown() {
-    return this.entity.position.y > this.entity.old_position.y;
+    return this.entity.position.y > this.entity.oldPosition.y;
   }
 
   public active: boolean;
@@ -184,8 +184,8 @@ export class Collision extends Component {
         this.entity.velocity.y += 50 * dt;
       }
 
-      this.entity.old_position.x = this.entity.position.x;
-      this.entity.old_position.y = this.entity.position.y;
+      this.entity.oldPosition.x = this.entity.position.x;
+      this.entity.oldPosition.y = this.entity.position.y;
 
       this.entity.position.x += this.entity.velocity.x;
       this.entity.position.y += this.entity.velocity.y;

@@ -47,6 +47,9 @@ export class EntityManager {
     }
 
     for (let i = 0; i < this.entities.length; i++) {
+      const entity = this.entities[i];
+      entity.oldPosition.x = entity.position.x;
+      entity.oldPosition.y = entity.position.y;
       this.entities[i].update(dt);
     }
   }
