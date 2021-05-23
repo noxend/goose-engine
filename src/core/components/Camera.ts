@@ -6,35 +6,38 @@ import { clamp } from "../../utils";
 export class Camera extends Component {
   public target: Entity;
   public smoothSpeed: number;
+  public viewport: Vector;
+  public min: Vector;
+  public max: Vector;
 
-  // public viewport = new Vector(700, 400);
+  init() {
+    this.viewport = new Vector(
+      window.ctx.canvas.width,
+      window.ctx.canvas.height
+    );
+  }
 
   public update() {
-    const entities = this.entity.manager.entities;
-    const canvasWidth = window.ctx.canvas.width;
-    const canvasHeight = window.ctx.canvas.height;
-
     const pos = Vector.lerp(
       this.entity.position,
       new Vector(
-        this.target.position.x - canvasWidth / 2,
-        this.target.position.y - canvasHeight / 2
+        this.target.position.x - this.viewport.x / 2,
+        this.target.position.y - this.viewport.y / 2
       ),
       this.smoothSpeed
     );
 
-    this.entity.position.x = clamp(pos.x, 0, 600);
-    this.entity.position.y = clamp(pos.y, 0, 0);
-
-    for (let i = 0; i < entities.length; i++) {
-      // entities[i].position.sub(this.entity.position);
-      // entities[i].position.x -= this.entity.position.x;
-      // entities[i].position.y -= this.entity.position.y;
-    }
+    this.entity.position.set(
+      clamp(pos.x, this.min.x, this.max.x),
+      clamp(pos.y, this.min.y, this.max.y)
+    );
   }
 }
 
 Camera.defaultParams = {
-  smoothSpeed: 0.05,
+  viewport: new Vector(900, 600),
+  max: new Vector(950, 0),
+  min: new Vector(0, -200),
+  smoothSpeed: 0.1,
   target: null,
 };
