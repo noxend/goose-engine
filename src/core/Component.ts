@@ -5,11 +5,7 @@ export class Component {
   public ID: number;
   static defaultParams: any;
 
-  constructor(
-    public entity: Entity,
-    public manager: ComponentManager,
-    params: any
-  ) {
+  constructor(public entity: Entity, params: any) {
     this.awake();
     for (const key in params) {
       if (Object.prototype.hasOwnProperty.call(params, key)) {
