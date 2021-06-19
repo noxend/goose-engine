@@ -36,8 +36,8 @@ export class Camera extends Component {
 
 Camera.defaultParams = {
   viewport: new Vector(900, 600),
-  max: new Vector(950, 0),
-  min: new Vector(0, -200),
+  max: new Vector(500, -380),
+  min: new Vector(0, 0),
   smoothSpeed: 0.1,
   target: null,
 };

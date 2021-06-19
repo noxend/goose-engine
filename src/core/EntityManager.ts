@@ -56,5 +56,6 @@ export class EntityManager {
 
   public init() {
     this.componentManager.init();
+    this.entities.reverse()
   }
 }
