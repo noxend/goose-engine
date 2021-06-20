@@ -6,7 +6,7 @@ export class Entity {
   public components: Map<typeof Component, Component>;
 
   public velocity = new Vector();
-  public old_position = new Vector();
+  public oldPosition = new Vector();
 
   constructor(
     public name: string,

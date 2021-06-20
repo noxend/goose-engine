@@ -8,3 +8,6 @@ export const createElement = (name: string, value?: string) => {
 
 export const range = (from: number, to: number, step = 1) =>
   Array.from({ length: (to - from) / step + 1 }, (_, i) => from + i * step);
+
+export const clamp = (num: number, min: number, max: number) =>
+  Math.min(Math.max(num, min), max);
