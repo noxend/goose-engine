@@ -1,4 +1,4 @@
-import { Component } from "core/Component";
+import { Component } from "../Component";
 import { AudioSource } from "./AudioSource";
 
 export class AudioManager extends Component {
