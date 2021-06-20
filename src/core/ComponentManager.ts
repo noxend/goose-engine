@@ -28,7 +28,7 @@ export class ComponentManager {
     while (this.registeredComponents.length > 0) {
       const { C, entity, params } = this.registeredComponents.pop()!;
 
-      const component = new C(entity, { ...C.defaultParams, ...params });
+      const component = new C(entity, this, { ...C.defaultParams, ...params });
       this.components.push(component);
       entity.components.set(C, component);
     }
