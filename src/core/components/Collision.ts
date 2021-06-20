@@ -21,7 +21,7 @@ export class Collision extends Component {
   }
 
   init() {
-    this.collision = this.manager.filterByType(Collision) as Collision[];
+    this.collision = this.componentManager.filterByType(Collision) as Collision[];
   }
 
   get top() {

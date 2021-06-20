@@ -3,13 +3,11 @@ import { ComponentManager } from "./ComponentManager";
 
 export class Component {
   public ID: number;
+  public componentManager: ComponentManager;
+
   static defaultParams: any;
 
-  constructor(
-    public entity: Entity,
-    public manager: ComponentManager,
-    params: any
-  ) {
+  constructor(public entity: Entity, params: any) {
     this.awake();
     for (const key in params) {
       if (Object.prototype.hasOwnProperty.call(params, key)) {

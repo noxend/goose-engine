@@ -2,7 +2,7 @@ import { Component } from "../Component";
 import { AudioSource } from "./AudioSource";
 
 export class AudioManager extends Component {
-  private audios: { [name: string]: any } = {};
+  private audios: { [name: string]: AudioSource } = {};
 
   public data: Array<any>;
 

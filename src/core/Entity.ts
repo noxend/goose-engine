@@ -8,11 +8,7 @@ export class Entity {
   public velocity = new Vector();
   public oldPosition = new Vector();
 
-  constructor(
-    public name: string,
-    public manager: EntityManager,
-    public position: Vector
-  ) {
+  constructor(public name: string, public manager: EntityManager, public position: Vector) {
     this.components = new Map();
   }
 
@@ -23,6 +19,9 @@ export class Entity {
   }
 
   public addComponent(C: typeof Component, params?: any) {
+    const component = new C(this, params);
+    this.components.set(C, component);
+
     return this.manager.addComponentToEntity(this, C, params);
   }
 
