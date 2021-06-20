@@ -10,8 +10,15 @@ export class ComponentManager {
     params: any;
   }> = [];
 
-  public register(entity: Entity, C: typeof Component, params?: any) {
-    this.registeredComponents.push({ C, entity, params });
+  public register(
+    entity: Entity,
+    C: typeof Component,
+    params?: any
+  ): Component {
+    const component = new C(entity, this, { ...C.defaultParams, ...params });
+    this.components.push(component);
+    entity.components.set(C, component);
+    return component;
   }
 
   public filterByType(C: typeof Component) {
@@ -25,14 +32,6 @@ export class ComponentManager {
   }
 
   public init() {
-    while (this.registeredComponents.length > 0) {
-      const { C, entity, params } = this.registeredComponents.pop()!;
-
-      const component = new C(entity, this, { ...C.defaultParams, ...params });
-      this.components.push(component);
-      entity.components.set(C, component);
-    }
-
     for (let i = 0; i < this.components.length; i++) {
       this.components[i].init();
     }

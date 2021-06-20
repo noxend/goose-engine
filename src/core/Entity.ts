@@ -23,8 +23,7 @@ export class Entity {
   }
 
   public addComponent(C: typeof Component, params?: any) {
-    this.manager.addComponentToEntity(this, C, params);
-    return this;
+    return this.manager.addComponentToEntity(this, C, params);
   }
 
   public getComponent(C: typeof Component) {

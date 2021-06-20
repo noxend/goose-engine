@@ -14,14 +14,19 @@ export class EntityManager {
     this.entitiesByName = new Map();
   }
 
+  public add(entity: Entity): void {
+    this.entitiesByName.set(entity.name, entity);
+    this.entities.push(entity);
+  }
+
   public create(name: string, position: Vector) {
     const entity = new Entity(name, this, position);
-    this.entities.push(entity);
 
     if (this.entitiesByName.has(name)) {
       console.warn(`Entity name '${name}' already exist`);
     } else {
       this.entitiesByName.set(name, entity);
+      this.entities.push(entity);
     }
 
     return entity;
@@ -35,8 +40,8 @@ export class EntityManager {
     entity: Entity,
     C: typeof Component,
     params?: any
-  ) {
-    this.componentManager.register(entity, C, params);
+  ): Component {
+    return this.componentManager.register(entity, C, params);
   }
 
   public update(dt: number) {
@@ -56,6 +61,6 @@ export class EntityManager {
 
   public init() {
     this.componentManager.init();
-    this.entities.reverse()
+    this.entities.reverse();
   }
 }
