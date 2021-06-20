@@ -12,9 +12,12 @@ export class ComponentManager {
 
   public register(entity: Entity, C: typeof Component, params?: any): Component {
     const component = new C(entity, { ...C.defaultParams, ...params });
+
     component.componentManager = this;
+
     this.components.push(component);
     entity.components.set(C, component);
+
     return component;
   }
 

@@ -4,11 +4,12 @@ import { Component } from "./Component";
 
 export class Entity {
   public components: Map<typeof Component, Component>;
+  public manager: EntityManager;
 
   public velocity = new Vector();
   public oldPosition = new Vector();
 
-  constructor(public name: string, public manager: EntityManager, public position: Vector) {
+  constructor(public name: string, public position: Vector) {
     this.components = new Map();
   }
 

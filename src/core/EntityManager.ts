@@ -19,15 +19,17 @@ export class EntityManager {
     this.entities.push(entity);
   }
 
-  public create(name: string, position: Vector) {
-    const entity = new Entity(name, this, position);
-
+  public create(name: string, position: Vector): Entity {
     if (this.entitiesByName.has(name)) {
       console.warn(`Entity name '${name}' already exist`);
-    } else {
-      this.entitiesByName.set(name, entity);
-      this.entities.push(entity);
     }
+
+    const entity = new Entity(name, position);
+
+    entity.manager = this;
+
+    this.entitiesByName.set(name, entity);
+    this.entities.push(entity);
 
     return entity;
   }
@@ -36,19 +38,16 @@ export class EntityManager {
     this.entitiesToDestroy.push(entity);
   }
 
-  public addComponentToEntity(
-    entity: Entity,
-    C: typeof Component,
-    params?: any
-  ): Component {
+  public addComponentToEntity(entity: Entity, C: typeof Component, params?: any): Component {
     return this.componentManager.register(entity, C, params);
   }
 
   public update(dt: number) {
     while (this.entitiesToDestroy.length > 0) {
       const entity = this.entitiesToDestroy.pop();
-      this.componentManager.components =
-        this.componentManager.components.filter((c) => c.entity !== entity);
+      this.componentManager.components = this.componentManager.components.filter(
+        (c) => c.entity !== entity
+      );
     }
 
     for (let i = 0; i < this.entities.length; i++) {
