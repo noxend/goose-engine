@@ -2,18 +2,23 @@
   "include": ["src/**/*"],
   "exclude": ["node_modules", "dist"],
   "compilerOptions": {
-    "target": "ESNext",
-    "module": "ESNext",
+    "target": "es5",
+    "module": "es6",
     "allowJs": true,
     "sourceMap": true,
     "strict": true,
     "noImplicitAny": true,
     "removeComments": true,
-    "outDir": "./dist",
+    "outDir": "./dist/",
     "strictPropertyInitialization": false,
     "esModuleInterop": true,
     "skipLibCheck": true,
     "moduleResolution": "Node",
-    "baseUrl": "src"
+    "baseUrl": "src",
+    "importHelpers": true,
+    "lib": ["esnext", "esnext.asynciterable", "dom"],
+    "paths": {
+      "@/*": ["./*"]
+    }
   }
 }

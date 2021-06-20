@@ -25,7 +25,7 @@ module.exports = {
   devtool: "source-map",
   resolve: {
     alias: {
-      src: path.resolve(__dirname, "src/"),
+      "@": path.join(__dirname, "src"),
     },
     extensions: [".ts", ".js"],
   },
@@ -34,8 +34,8 @@ module.exports = {
     filename: "bundle.js",
   },
   devServer: {
-    contentBase: "dist",
-    disableHostCheck: true,
+    hot: true,
+    historyApiFallback: true,
   },
   plugins: [
     new ForkTsCheckerWebpackPlugin(),
