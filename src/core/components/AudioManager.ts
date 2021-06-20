@@ -8,7 +8,11 @@ export class AudioManager extends Component {
 
   public init(): void {
     for (const data of this.data) {
-      this.audios[data.name] = new AudioSource(this.entity, data);
+      this.audios[data.name] = new AudioSource(
+        this.entity,
+        this.entity.manager.componentManager,
+        data
+      );
     }
   }
 
