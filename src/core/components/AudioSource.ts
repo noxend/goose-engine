@@ -5,27 +5,35 @@ export class AudioSource extends Component {
 
   public src: string;
   public volume: number;
+  public loop: boolean;
 
   init() {
+    if (!this.src) throw new Error("src");
+
     this.audio = new Audio(this.src);
     this.audio.volume = this.volume;
+    this.audio.loop = this.loop;
   }
 
-  public play() {
-    this.audio.load();
+  public play(): void {
+    if (!this.audio.paused) {
+      this.stop();
+    }
     this.audio.play();
   }
 
-  public pause() {
-    if (!this.audio.ended) {
-      this.audio.pause();
-    }
+  public pause(): void {
+    this.audio.pause();
   }
 
-  update() {}
+  public stop(): void {
+    this.audio.pause();
+    this.audio.currentTime = 0;
+  }
 }
 
 AudioSource.defaultParams = {
+  loop: false,
   volume: 1,
   src: "",
 };
