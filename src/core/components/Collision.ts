@@ -179,7 +179,7 @@ export class Collision extends Component {
   update(dt: number) {
     const collisions: Collision[] = [];
 
-    const camera = this.entity.manager.entitiesByName.get("camera")!;
+    // const camera = this.entity.manager.entitiesByName.get("camera")!;
 
     // let x = this.entity.position.x;
     // let y = this.entity.position.y;

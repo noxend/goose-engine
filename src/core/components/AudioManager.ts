@@ -4,11 +4,11 @@ import { AudioSource } from "./AudioSource";
 export class AudioManager extends Component {
   private audios: { [name: string]: AudioSource } = {};
 
-  public data: Array<any>;
+  public sources: Array<any>;
 
   public init(): void {
-    for (const name in this.data) {
-      this.audios[name] = this.entity.addComponent(AudioSource, this.data[name]) as AudioSource;
+    for (const name in this.sources) {
+      this.audios[name] = this.entity.addComponent(AudioSource, this.sources[name]) as AudioSource;
     }
   }
 
@@ -41,5 +41,5 @@ export class AudioManager extends Component {
 }
 
 AudioManager.defaultParams = {
-  data: {},
+  sources: {},
 };

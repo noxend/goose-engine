@@ -20,13 +20,15 @@ export class Sprite extends Component {
   }
 
   update() {
-    const camera = this.entity.manager.entitiesByName.get("camera")!;
+    const camera = undefined;
 
     let x = this.entity.position.x;
     let y = this.entity.position.y;
 
-    x -= camera.position.x;
-    y -= camera.position.y;
+    // if (camera) {
+    //   x -= camera.position.x;
+    //   y -= camera.position.y;
+    // }
 
     window.ctx.save();
     window.ctx.translate(this.flipX ? x + this.size.x : x, y);
@@ -49,7 +51,7 @@ export class Sprite extends Component {
 Sprite.defaultParams = {
   size: new Vector(unitSize, unitSize),
   spriteSize: new Vector(),
-  image: HTMLImageElement,
+  image: undefined,
   flipX: false,
   sprite: 0,
 };

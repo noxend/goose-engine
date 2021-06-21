@@ -1,23 +1,11 @@
-import Vector from "../utils/Vector";
 import { Component } from "./Component";
-import { Entity } from "./Entity";
 
 export class ComponentManager {
   public components: Component[] = [];
-  public registeredComponents: Array<{
-    C: typeof Component;
-    entity: Entity;
-    params: any;
-  }> = [];
 
-  public register(entity: Entity, C: typeof Component, params?: any): Component {
-    const component = new C(entity, { ...C.defaultParams, ...params });
-
+  public register(component: Component) {
     component.componentManager = this;
-
     this.components.push(component);
-    entity.components.set(C, component);
-
     return component;
   }
 
@@ -32,8 +20,8 @@ export class ComponentManager {
   }
 
   public init() {
-    for (let i = 0; i < this.components.length; i++) {
-      this.components[i].init();
+    for (const component of this.components) {
+      component.init();
     }
   }
 }

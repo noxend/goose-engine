@@ -20,10 +20,10 @@ export class Entity {
   }
 
   public addComponent(C: typeof Component, params?: any) {
-    const component = new C(this, params);
+    const component = new C(this, { ...C.defaultParams, ...params });
     this.components.set(C, component);
 
-    return this.manager.addComponentToEntity(this, C, params);
+    return component;
   }
 
   public getComponent(C: typeof Component) {
@@ -32,5 +32,9 @@ export class Entity {
 
   public update(dt: number) {
     this.components.forEach((c) => c.update(dt));
+  }
+
+  public init() {
+    this.components.forEach((c) => c.init());
   }
 }

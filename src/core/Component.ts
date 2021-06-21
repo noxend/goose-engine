@@ -9,6 +9,7 @@ export class Component {
 
   constructor(public entity: Entity, params: any) {
     this.awake();
+
     for (const key in params) {
       if (Object.prototype.hasOwnProperty.call(params, key)) {
         // @ts-ignore

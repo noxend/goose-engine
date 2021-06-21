@@ -9,9 +9,16 @@ export class EntityManager {
   public componentManager: ComponentManager;
   public entitiesToDestroy: Entity[] = [];
 
-  constructor() {
+  constructor(entities: Entity[] = []) {
     this.componentManager = new ComponentManager();
     this.entitiesByName = new Map();
+
+    for (const entity of entities) {
+      this.entities.push(entity);
+      this.entitiesByName.set(entity.name, entity);
+
+      entity.components.forEach((component) => this.componentManager.register(component));
+    }
   }
 
   public add(entity: Entity): void {
@@ -38,28 +45,32 @@ export class EntityManager {
     this.entitiesToDestroy.push(entity);
   }
 
-  public addComponentToEntity(entity: Entity, C: typeof Component, params?: any): Component {
-    return this.componentManager.register(entity, C, params);
-  }
+  // public addComponentToEntity(entity: Entity, C: typeof Component, params?: any): Component {
+  //   return this.componentManager.register(entity, C, params);
+  // }
 
   public update(dt: number) {
     while (this.entitiesToDestroy.length > 0) {
-      const entity = this.entitiesToDestroy.pop();
+      const entity = this.entitiesToDestroy.pop()!;
+
+      const index = this.entities.indexOf(entity);
+      this.entities.splice(index, 1);
+
       this.componentManager.components = this.componentManager.components.filter(
         (c) => c.entity !== entity
       );
     }
 
-    for (let i = 0; i < this.entities.length; i++) {
-      const entity = this.entities[i];
+    for (const entity of this.entities) {
       entity.oldPosition.x = entity.position.x;
       entity.oldPosition.y = entity.position.y;
-      this.entities[i].update(dt);
+      entity.update(dt);
     }
   }
 
   public init() {
-    this.componentManager.init();
-    this.entities.reverse();
+    for (const entity of this.entities) {
+      entity.init();
+    }
   }
 }
