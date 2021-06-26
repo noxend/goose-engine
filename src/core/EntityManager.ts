@@ -14,6 +14,7 @@ export class EntityManager {
     this.entitiesByName = new Map();
 
     for (const entity of entities) {
+      entity.manager = this;
       this.entities.push(entity);
       this.entitiesByName.set(entity.name, entity);
 

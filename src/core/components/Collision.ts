@@ -179,17 +179,9 @@ export class Collision extends Component {
   update(dt: number) {
     const collisions: Collision[] = [];
 
-    // const camera = this.entity.manager.entitiesByName.get("camera")!;
-
-    // let x = this.entity.position.x;
-    // let y = this.entity.position.y;
-
-    // x -= camera.position.x;
-    // y -= camera.position.y;
-
     if (this.active) {
       if (!this?.static) {
-        this.entity.velocity.y += 50 * dt;
+        this.entity.velocity.y += 20 * dt;
       }
 
       this.entity.position.x += this.entity.velocity.x;

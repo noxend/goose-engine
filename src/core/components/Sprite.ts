@@ -1,5 +1,6 @@
 import Vector from "../../utils/Vector";
 import { Component } from "../Component";
+import { Camera } from "./Camera";
 
 const unitSize = 100;
 
@@ -20,15 +21,15 @@ export class Sprite extends Component {
   }
 
   update() {
-    const camera = undefined;
+    const camera = this.entity.manager.entitiesByName.get("camera");
 
     let x = this.entity.position.x;
     let y = this.entity.position.y;
 
-    // if (camera) {
-    //   x -= camera.position.x;
-    //   y -= camera.position.y;
-    // }
+    if (camera) {
+      x -= camera.position.x;
+      y -= camera.position.y;
+    }
 
     window.ctx.save();
     window.ctx.translate(this.flipX ? x + this.size.x : x, y);

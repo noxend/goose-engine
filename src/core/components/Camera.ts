@@ -11,10 +11,7 @@ export class Camera extends Component {
   public max: Vector;
 
   init() {
-    this.viewport = new Vector(
-      window.ctx.canvas.width,
-      window.ctx.canvas.height
-    );
+    this.viewport = new Vector(window.ctx.canvas.width, window.ctx.canvas.height);
   }
 
   public update() {
@@ -27,16 +24,18 @@ export class Camera extends Component {
       this.smoothSpeed
     );
 
-    this.entity.position.set(
-      clamp(pos.x, this.min.x, this.max.x),
-      clamp(pos.y, this.min.y, this.max.y)
-    );
+    // this.entity.position.set(
+    //   clamp(pos.x, this.min.x, this.max.x),
+    //   clamp(pos.y, this.min.y, this.max.y)
+    // );
+
+    this.entity.position.set(pos.x, pos.y);
   }
 }
 
 Camera.defaultParams = {
   viewport: new Vector(900, 600),
-  max: new Vector(500, -380),
+  max: new Vector(0, 0),
   min: new Vector(0, 0),
   smoothSpeed: 0.1,
   target: null,
