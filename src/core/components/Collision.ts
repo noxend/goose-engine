@@ -17,11 +17,8 @@ export class Collision extends Component {
   private debug: boolean;
   public trigger: boolean;
 
-  awake() {
-    this.evens = new EventEmitter();
-  }
-
   init() {
+    this.evens = new EventEmitter();
     this.collision = this.componentManager.filterByType(Collision) as Collision[];
   }
 

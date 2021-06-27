@@ -1,6 +1,11 @@
 import { Entity } from "./Entity";
 import { ComponentManager } from "./ComponentManager";
 
+export interface Component {
+  update?(dt: number): void;
+  init?(): void;
+}
+
 export class Component {
   public ID: number;
   public componentManager: ComponentManager;
@@ -8,8 +13,6 @@ export class Component {
   static defaultParams: any;
 
   constructor(public entity: Entity, params: any) {
-    this.awake();
-
     for (const key in params) {
       if (Object.prototype.hasOwnProperty.call(params, key)) {
         // @ts-ignore
@@ -17,8 +20,4 @@ export class Component {
       }
     }
   }
-
-  awake() {}
-  init() {}
-  update(dt: number) {}
 }

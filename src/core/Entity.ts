@@ -31,10 +31,10 @@ export class Entity {
   }
 
   public update(dt: number) {
-    this.components.forEach((c) => c.update(dt));
+    this.components.forEach((c) => c.update && c.update(dt));
   }
 
   public init() {
-    this.components.forEach((c) => c.init());
+    this.components.forEach((c) => c.init && c.init());
   }
 }

@@ -15,13 +15,13 @@ export class ComponentManager {
 
   public update(dt: number) {
     for (const component of this.components) {
-      component.update(dt);
+      component.update && component.update(dt);
     }
   }
 
   public init() {
     for (const component of this.components) {
-      component.init();
+      component.init && component.init();
     }
   }
 }
