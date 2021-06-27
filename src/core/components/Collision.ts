@@ -10,15 +10,15 @@ const velocity_x = createElement("velocity_y", "");
 const velocity_y = createElement("velocity_y", "");
 
 export class Collision extends Component {
+  public ee = new EventEmitter();
+
   public collision: Collision[];
-  public evens: EventEmitter;
   public center: Vector;
   public size: Vector;
   private debug: boolean;
   public trigger: boolean;
 
   init() {
-    this.evens = new EventEmitter();
     this.collision = this.componentManager.filterByType(Collision) as Collision[];
   }
 
@@ -203,7 +203,7 @@ export class Collision extends Component {
 
           if (collision.trigger && !collision.triggered) {
             collision.triggered = true;
-            collision.evens.emit("onTriggerEnter", this);
+            collision.ee.emit("onTriggerEnter", this);
           }
         } else {
           if (collision.trigger && collision.triggered) {
@@ -212,7 +212,7 @@ export class Collision extends Component {
         }
 
         //             this.evens.emit("onTriggerEnter", this.collision[i]);
-        this.evens.emit("onCollisionEnter", collisions);
+        this.ee.emit("onCollisionEnter", collisions);
       }
 
       if (this.entity.name === "player") {

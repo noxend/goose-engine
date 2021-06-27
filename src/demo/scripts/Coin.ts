@@ -7,7 +7,7 @@ export class Coin extends Component {
 
   public init() {
     this.collision = this.entity.getComponent(Collision) as Collision;
-    this.collision.evens.on("onTriggerEnter", this.onTriggerEnter.bind(this));
+    this.collision.ee.on("onTriggerEnter", this.onTriggerEnter.bind(this));
   }
 
   private onTriggerEnter(collision: Collision) {
