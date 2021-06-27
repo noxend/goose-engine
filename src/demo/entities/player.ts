@@ -41,10 +41,17 @@ const getPlayer = async (): Promise<Entity> => {
     },
   });
 
+  const jumpWav = await (await import("@/demo/assets")).jumpWav;
+  const pickupWav = await (await import("@/demo/assets")).pickupWav;
+
   player.addComponent(AudioManager, {
     sources: {
       jump: {
-        src: await (await import("@/demo/assets")).jump,
+        src: jumpWav,
+        volume: 0.4,
+      },
+      coin: {
+        src: pickupWav,
         volume: 0.4,
       },
     },

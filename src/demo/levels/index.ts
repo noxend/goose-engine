@@ -4,12 +4,13 @@ import { imageLoader } from "@/utils";
 import Vector from "@/utils/Vector";
 
 const level = [
-  `                                         `,
-  `                                         `,
-  `      0112               0112            `,
-  `                                         `,
-  `              0======2           0======2`,
-  `0=====2  0==2                            `,
+  `                                               `,
+  `                                     0112      `,
+  `                                               `,
+  `      0112               0112              0112`,
+  `                                               `,
+  `              0======2          0=======2      `,
+  `0=====2  0==2                                  `,
 ];
 
 const sprites: { [key: string]: number } = {
