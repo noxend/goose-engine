@@ -10,18 +10,16 @@ const velocity_x = createElement("velocity_y", "");
 const velocity_y = createElement("velocity_y", "");
 
 export class Collision extends Component {
+  public ee = new EventEmitter();
+
   public collision: Collision[];
-  public evens: EventEmitter;
   public center: Vector;
   public size: Vector;
   private debug: boolean;
-
-  awake() {
-    this.evens = new EventEmitter();
-  }
+  public trigger: boolean;
 
   init() {
-    this.collision = this.manager.filterByType(Collision) as Collision[];
+    this.collision = this.componentManager.filterByType(Collision) as Collision[];
   }
 
   get top() {
@@ -115,8 +113,7 @@ export class Collision extends Component {
         this.bottom > target.top
       ) {
         this.entity.velocity.x = 0;
-        this.entity.oldPosition.x = this.entity.position.x =
-          target.left - this.size.x;
+        this.entity.oldPosition.x = this.entity.position.x = target.left - this.size.x;
 
         return true;
       }
@@ -138,8 +135,7 @@ export class Collision extends Component {
         this.right > target.left
       ) {
         this.entity.velocity.y = 0;
-        this.entity.oldPosition.y = this.entity.position.y =
-          target.top - this.size.y;
+        this.entity.oldPosition.y = this.entity.position.y = target.top - this.size.y;
 
         return true;
       }
@@ -173,23 +169,17 @@ export class Collision extends Component {
 
   public active: boolean;
   public static: boolean;
-  public trigger: boolean;
   public type: string;
+
+  public triggered = false;
 
   update(dt: number) {
     const collisions: Collision[] = [];
-
-    const camera = this.entity.manager.entitiesByName.get("camera")!;
-
-    // let x = this.entity.position.x;
-    // let y = this.entity.position.y;
-
-    // x -= camera.position.x;
-    // y -= camera.position.y;
+    this.collision = this.componentManager.filterByType(Collision) as Collision[];
 
     if (this.active) {
       if (!this?.static) {
-        this.entity.velocity.y += 50 * dt;
+        this.entity.velocity.y += 20 * dt;
       }
 
       this.entity.position.x += this.entity.velocity.x;
@@ -197,6 +187,8 @@ export class Collision extends Component {
 
       for (let i = 0; i < this.collision.length; i++) {
         if (this.collision[i] === this) continue;
+
+        const collision = this.collision[i];
 
         if (!this?.collision[i]?.trigger) {
           if (this.collision[i]?.type === "left") {
@@ -206,11 +198,21 @@ export class Collision extends Component {
           }
         }
 
-        if (this.rectangleCollisionDetector(this.collision[i])) {
-          collisions.push(this.collision[i]);
+        if (this.rectangleCollisionDetector(collision)) {
+          collisions.push(collision);
+
+          if (collision.trigger && !collision.triggered) {
+            collision.triggered = true;
+            collision.ee.emit("onTriggerEnter", this);
+          }
+        } else {
+          if (collision.trigger && collision.triggered) {
+            collision.triggered = false;
+          }
         }
 
-        this.evens.emit("onCollisionEnter", collisions);
+        //             this.evens.emit("onTriggerEnter", this.collision[i]);
+        this.ee.emit("onCollisionEnter", collisions);
       }
 
       if (this.entity.name === "player") {
@@ -233,4 +235,5 @@ Collision.defaultParams = {
   center: new Vector(),
   debug: false,
   active: false,
+  trigger: false,
 };

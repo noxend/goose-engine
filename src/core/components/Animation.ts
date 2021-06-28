@@ -31,8 +31,7 @@ export class Animation extends Component {
     for (const item in this.animations) {
       const anim = this.animations[item];
 
-      if (anim.frames || anim.from === undefined || anim.to === undefined)
-        continue;
+      if (anim.frames || anim.from === undefined || anim.to === undefined) continue;
 
       this.animations[item].frames = range(anim.from, anim.to);
     }
@@ -55,7 +54,7 @@ export class Animation extends Component {
     this.sprite.setSprite(frames[this.index]);
   }
 
-  update() {
+  update(dt: number) {
     const time = performance.now();
 
     if (!this.current) this.current = this.default;
@@ -66,7 +65,7 @@ export class Animation extends Component {
       this.old = this.current;
     }
 
-    if (time - this.lastTime > 120) {
+    if (time - this.lastTime > 1 / dt) {
       this.nextFrame();
       this.lastTime = time;
     } else {

@@ -9,5 +9,11 @@ export const createElement = (name: string, value?: string) => {
 export const range = (from: number, to: number, step = 1) =>
   Array.from({ length: (to - from) / step + 1 }, (_, i) => from + i * step);
 
-export const clamp = (num: number, min: number, max: number) =>
-  Math.min(Math.max(num, min), max);
+export const clamp = (num: number, min: number, max: number) => Math.min(Math.max(num, min), max);
+
+export const imageLoader = (path: string): Promise<HTMLImageElement> =>
+  new Promise((resolve) => {
+    const image = new Image();
+    image.src = path;
+    image.onload = () => resolve(image);
+  });
