@@ -25,7 +25,7 @@ export class PlayerController extends Component {
 
     if (Input.isKeyPressed(KeyboardKey.SPACE) && this.entity.velocity.y === 0) {
       this.entity.velocity.y = -500 * dt;
-      // this.audioManager.play("jump");
+      this.audioManager.play("jump");
     }
 
     if (Input.getAxis(Axis.HORIZONTAL) !== 0) {
