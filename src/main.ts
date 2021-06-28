@@ -41,19 +41,7 @@ const main = async () => {
     target: player,
   });
 
-  const entityManager = new EntityManager([
-    ...level,
-    player,
-    await initCoin("coin", new Vector(1400, 400)),
-    await initCoin("coin-2", new Vector(1500, 400)),
-    await initCoin("coin-3", new Vector(1600, 400)),
-    await initCoin("coin-4", new Vector(1700, 400)),
-    await initCoin("coin-4", new Vector(1800, 400)),
-    await initCoin("coin-4", new Vector(1900, 400)),
-    await initCoin("coin-4", new Vector(2000, 400)),
-    await initCoin("coin-4", new Vector(2100, 400)),
-    camera,
-  ]);
+  const entityManager = new EntityManager([...level, player, camera]);
 
   entityManager.init();
 
