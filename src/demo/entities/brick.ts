@@ -17,11 +17,13 @@ const initBrick =
       })
     );
 
-    // block.addComponent(
-    //   new Collision({
-    //     static: true,
-    //   })
-    // );
+    block.addComponent(
+      new Collision({
+        size: new Vector(100, 100),
+        center: new Vector(),
+        static: true,
+      })
+    );
 
     return block;
   };

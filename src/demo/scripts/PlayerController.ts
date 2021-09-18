@@ -5,6 +5,10 @@ import { createElement } from "@/utils";
 
 const coinsDebug = createElement("coins", `0`);
 
+interface PlayerControllerParams {
+  speed: number;
+}
+
 export class PlayerController extends Component {
   private audioManager: AudioManager;
   private animation: Animation;
@@ -14,10 +18,16 @@ export class PlayerController extends Component {
 
   public coins = 0;
 
+  constructor({ speed }: PlayerControllerParams) {
+    super();
+
+    this.speed = speed;
+  }
+
   public init() {
     this.audioManager = this.entity.getComponent(AudioManager) as AudioManager;
-    // this.animation = this.entity.getComponent(Animation) as Animation;
-    // this.sprite = this.entity.getComponent(Sprite) as Sprite;
+    this.animation = this.entity.getComponent(Animation) as Animation;
+    this.sprite = this.entity.getComponent(Sprite) as Sprite;
   }
 
   public update(dt: number) {

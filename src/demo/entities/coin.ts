@@ -1,7 +1,8 @@
 import Vector from "@/utils/Vector";
-import { Sprite, Animation } from "@/core/components";
+import { Sprite, Animation, Collision } from "@/core/components";
 import { Entity } from "@/core/Entity";
 import { imageLoader } from "@/utils";
+import { Coin } from "../scripts/Coin";
 
 const initCoin = async (name: string, position: Vector): Promise<Entity> => {
   const coin = new Entity(name, position);
@@ -27,15 +28,16 @@ const initCoin = async (name: string, position: Vector): Promise<Entity> => {
     })
   );
 
-  // coin.addComponent(
-  //   new Collision({
-  //     size: new Vector(50, 50),
-  //     trigger: true,
-  //     active: true,
-  //   })
-  // );
+  coin.addComponent(
+    new Collision({
+      size: new Vector(50, 50),
+      center: new Vector(),
+      trigger: true,
+      active: true,
+    })
+  );
 
-  // coin.addComponent(new Coin());
+  coin.addComponent(new Coin());
 
   return coin;
 };

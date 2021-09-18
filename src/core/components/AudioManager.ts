@@ -1,14 +1,28 @@
 import { Component } from "../Component";
-import { AudioSource } from "./AudioSource";
+import { AudioSource, AudioSourceParams } from "./AudioSource";
+
+interface AudioManagerParams {
+  sources: {
+    [k: string]: AudioSourceParams;
+  };
+}
 
 export class AudioManager extends Component {
   private audios: { [name: string]: AudioSource } = {};
 
-  public sources: Array<any>;
+  public sources: AudioManagerParams["sources"];
+
+  constructor({ sources }: AudioManagerParams) {
+    super();
+
+    this.sources = sources;
+  }
 
   public init(): void {
     for (const name in this.sources) {
-      // this.audios[name] = this.entity.addComponent(new AudioSource(), this.sources[name]) as AudioSource;
+      this.audios[name] = this.entity.addComponent(
+        new AudioSource(this.sources[name])
+      ) as AudioSource;
     }
   }
 

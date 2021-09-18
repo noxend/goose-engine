@@ -46,22 +46,22 @@ const getPlayer = async (): Promise<Entity> => {
     })
   );
 
-  // player.addComponent(
-  //   new AudioManager({
-  //     sources: {
-  //       jump: {
-  //         src: await (await import("@/demo/assets")).jumpWav,
-  //         volume: 0.4,
-  //       },
-  //       coin: {
-  //         src: await (await import("@/demo/assets")).pickupWav,
-  //         volume: 0.4,
-  //       },
-  //     },
-  //   })
-  // );
+  player.addComponent(
+    new AudioManager({
+      sources: {
+        jump: {
+          src: await (await import("@/demo/assets")).jumpWav,
+          volume: 0.4,
+        },
+        coin: {
+          src: await (await import("@/demo/assets")).pickupWav,
+          volume: 0.4,
+        },
+      },
+    })
+  );
 
-  // player.addComponent(new PlayerController());
+  player.addComponent(new PlayerController({ speed: 400 }));
 
   return player;
 };

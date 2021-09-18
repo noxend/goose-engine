@@ -9,7 +9,7 @@ export class ComponentManager {
     return component;
   }
 
-  public filterByType(C: typeof Component) {
+  public filterByType(C: any) {
     return this.components.filter((c) => c instanceof C);
   }
 

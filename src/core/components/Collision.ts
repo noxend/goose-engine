@@ -9,14 +9,42 @@ const position_y = createElement("position_x", "");
 const velocity_x = createElement("velocity_y", "");
 const velocity_y = createElement("velocity_y", "");
 
+// Collision.defaultParams = {
+//   size: new Vector(100, 100),
+//   center: new Vector(),
+//   debug: false,
+//   active: false,
+//   trigger: false,
+// };
+
+interface CollisionParams {
+  size: Vector;
+  center: Vector;
+  debug?: boolean;
+  active?: boolean;
+  trigger?: boolean;
+  static?: boolean;
+}
+
 export class Collision extends Component {
   public ee = new EventEmitter();
 
   public collision: Collision[];
   public center: Vector;
   public size: Vector;
-  private debug: boolean;
+  public debug: boolean;
   public trigger: boolean;
+
+  constructor({ size, active, center, debug, trigger, ...params }: CollisionParams) {
+    super();
+
+    this.size = size;
+    this.center = center;
+    this.trigger = trigger || false;
+    this.debug = debug || false;
+    this.active = active || false;
+    this.static = params.static || false;
+  }
 
   init() {
     this.collision = this.componentManager.filterByType(Collision) as Collision[];
@@ -229,11 +257,3 @@ export class Collision extends Component {
     }
   }
 }
-
-// Collision.defaultParams = {
-//   size: new Vector(100, 100),
-//   center: new Vector(),
-//   debug: false,
-//   active: false,
-//   trigger: false,
-// };

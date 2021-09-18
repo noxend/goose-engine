@@ -1,11 +1,25 @@
 import { Component } from "../Component";
 
+export interface AudioSourceParams {
+  loop?: boolean;
+  volume?: number;
+  src: string;
+}
+
 export class AudioSource extends Component {
   public audio: HTMLAudioElement;
 
   public src: string;
   public volume: number;
   public loop: boolean;
+
+  constructor({ src, loop = false, volume = 1 }: AudioSourceParams) {
+    super();
+
+    this.volume = volume;
+    this.loop = loop;
+    this.src = src;
+  }
 
   init() {
     if (!this.src) throw new Error("src");
@@ -31,9 +45,3 @@ export class AudioSource extends Component {
     this.audio.currentTime = 0;
   }
 }
-
-// AudioSource.defaultParams = {
-//   loop: false,
-//   volume: 1,
-//   src: "",
-// };
