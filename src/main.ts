@@ -4,7 +4,7 @@ import { EntityManager } from "@/core/EntityManager";
 
 import initPlayer from "@/demo/entities/player";
 import loadLevel from "@/demo/levels";
-import { AudioSource, Camera } from "./core/components";
+import { Camera } from "./core/components";
 import { Entity } from "./core/Entity";
 import initCoin from "./demo/entities/coin";
 import { createElement } from "./utils";
@@ -35,13 +35,10 @@ const main = async () => {
 
   const player = await initPlayer();
 
-  const camera = new Entity("camera", new Vector());
+  // const camera = new Entity("camera", new Vector());
+  // camera.addComponent(new Camera());
 
-  camera.addComponent(Camera, {
-    target: player,
-  });
-
-  const entityManager = new EntityManager([...level, player, camera]);
+  const entityManager = new EntityManager([...level, player]);
 
   entityManager.init();
 

@@ -8,7 +8,7 @@ export class AudioManager extends Component {
 
   public init(): void {
     for (const name in this.sources) {
-      this.audios[name] = this.entity.addComponent(AudioSource, this.sources[name]) as AudioSource;
+      // this.audios[name] = this.entity.addComponent(new AudioSource(), this.sources[name]) as AudioSource;
     }
   }
 
@@ -39,7 +39,3 @@ export class AudioManager extends Component {
     }
   }
 }
-
-AudioManager.defaultParams = {
-  sources: {},
-};

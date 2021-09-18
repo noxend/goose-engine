@@ -32,8 +32,8 @@ export class AudioSource extends Component {
   }
 }
 
-AudioSource.defaultParams = {
-  loop: false,
-  volume: 1,
-  src: "",
-};
+// AudioSource.defaultParams = {
+//   loop: false,
+//   volume: 1,
+//   src: "",
+// };

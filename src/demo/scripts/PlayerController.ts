@@ -16,8 +16,8 @@ export class PlayerController extends Component {
 
   public init() {
     this.audioManager = this.entity.getComponent(AudioManager) as AudioManager;
-    this.animation = this.entity.getComponent(Animation) as Animation;
-    this.sprite = this.entity.getComponent(Sprite) as Sprite;
+    // this.animation = this.entity.getComponent(Animation) as Animation;
+    // this.sprite = this.entity.getComponent(Sprite) as Sprite;
   }
 
   public update(dt: number) {
@@ -60,6 +60,6 @@ export class PlayerController extends Component {
   }
 }
 
-PlayerController.defaultParams = {
-  speed: 400,
-};
+// PlayerController.defaultParams = {
+//   speed: 400,
+// };

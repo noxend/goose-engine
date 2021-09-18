@@ -8,56 +8,60 @@ import { PlayerController } from "../scripts/PlayerController";
 const getPlayer = async (): Promise<Entity> => {
   const player = new Entity("player", new Vector(100, 100));
 
-  player.addComponent(Sprite, {
-    image: await imageLoader(await (await import("@/demo/assets")).hero),
-    spriteSize: new Vector(16, 16),
-  });
+  player.addComponent(
+    new Sprite({
+      image: await imageLoader(await (await import("@/demo/assets")).hero),
+      spriteSize: new Vector(16, 16),
+      size: new Vector(100, 100),
+    })
+  );
 
-  player.addComponent(Collision, { active: true });
+  // player.addComponent(new Collision({ active: true }));
 
-  player.addComponent(Animation, {
-    default: "idle",
-    animations: {
-      idle: {
-        repeat: true,
-        from: 40,
-        to: 43,
+  player.addComponent(
+    new Animation({
+      defaultAnimation: "idle",
+      animations: {
+        idle: {
+          repeat: true,
+          from: 40,
+          to: 43,
+        },
+        run: {
+          repeat: true,
+          from: 8,
+          to: 13,
+        },
+        jump: {
+          repeat: true,
+          from: 56,
+          to: 58,
+        },
+        landing: {
+          repeat: true,
+          from: 48,
+          to: 50,
+        },
       },
-      run: {
-        repeat: true,
-        from: 8,
-        to: 13,
-      },
-      jump: {
-        repeat: true,
-        from: 56,
-        to: 58,
-      },
-      landing: {
-        repeat: true,
-        from: 48,
-        to: 50,
-      },
-    },
-  });
+    })
+  );
 
-  const jumpWav = await (await import("@/demo/assets")).jumpWav;
-  const pickupWav = await (await import("@/demo/assets")).pickupWav;
+  // player.addComponent(
+  //   new AudioManager({
+  //     sources: {
+  //       jump: {
+  //         src: await (await import("@/demo/assets")).jumpWav,
+  //         volume: 0.4,
+  //       },
+  //       coin: {
+  //         src: await (await import("@/demo/assets")).pickupWav,
+  //         volume: 0.4,
+  //       },
+  //     },
+  //   })
+  // );
 
-  player.addComponent(AudioManager, {
-    sources: {
-      jump: {
-        src: jumpWav,
-        volume: 0.4,
-      },
-      coin: {
-        src: pickupWav,
-        volume: 0.4,
-      },
-    },
-  });
-
-  player.addComponent(PlayerController);
+  // player.addComponent(new PlayerController());
 
   return player;
 };

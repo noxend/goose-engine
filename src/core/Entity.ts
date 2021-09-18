@@ -17,15 +17,15 @@ export class Entity {
     this.manager.destroy(this);
   }
 
-  public addComponent(C: typeof Component, params?: any) {
-    const component = new C(this, { ...C.defaultParams, ...params });
+  public addComponent(component: Component) {
+    component.entity = this;
 
     this.components.push(component);
 
     return component;
   }
 
-  public getComponent(C: typeof Component) {
+  public getComponent(C: any) {
     for (const component of this.components) {
       if (component instanceof C) {
         return component;

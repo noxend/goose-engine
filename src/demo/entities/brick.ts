@@ -8,15 +8,20 @@ const initBrick =
   async (name: string, position: Vector): Promise<Entity> => {
     const block = new Entity(name, position);
 
-    block.addComponent(Sprite, {
-      image: await imageLoader(await (await import("@/demo/assets")).tileset),
-      spriteSize: new Vector(16, 16),
-      sprite,
-    });
+    block.addComponent(
+      new Sprite({
+        image: await imageLoader(await (await import("@/demo/assets")).tileset),
+        spriteSize: new Vector(16, 16),
+        size: new Vector(100, 100),
+        sprite,
+      })
+    );
 
-    block.addComponent(Collision, {
-      static: true,
-    });
+    // block.addComponent(
+    //   new Collision({
+    //     static: true,
+    //   })
+    // );
 
     return block;
   };

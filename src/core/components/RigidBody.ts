@@ -15,8 +15,8 @@ export class RigidBody extends Component {
   }
 }
 
-RigidBody.defaultParams = {
-  velocity: new Vector(0, 0),
-  gravityForce: 10,
-  mass: 1,
-};
+// RigidBody.defaultParams = {
+//   velocity: new Vector(0, 0),
+//   gravityForce: 10,
+//   mass: 1,
+// };

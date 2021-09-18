@@ -7,17 +7,7 @@ export interface Component {
 }
 
 export class Component {
-  public ID: number;
   public componentManager: ComponentManager;
-
-  static defaultParams: any;
-
-  constructor(public entity: Entity, params: any) {
-    for (const key in params) {
-      if (Object.prototype.hasOwnProperty.call(params, key)) {
-        // @ts-ignore
-        this[key] = params[key];
-      }
-    }
-  }
+  public entity: Entity;
+  public ID: number;
 }

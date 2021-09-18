@@ -4,12 +4,30 @@ import { Camera } from "./Camera";
 
 const unitSize = 100;
 
+interface SpriteProps {
+  size: Vector;
+  spriteSize: Vector;
+  image: HTMLImageElement;
+  flipX?: boolean;
+  sprite?: number;
+}
+
 export class Sprite extends Component {
   public image: HTMLImageElement;
   public spriteSize: Vector;
   public sprite: number;
   public flipX: boolean;
   public size: Vector;
+
+  constructor({ image, spriteSize, size, flipX, sprite }: SpriteProps) {
+    super();
+
+    this.image = image;
+    this.spriteSize = spriteSize;
+    this.size = size;
+    this.flipX = flipX || false;
+    this.sprite = sprite || 0;
+  }
 
   getByX = (i: number) => (i * this.spriteSize.x) % this.image.width;
 
@@ -48,11 +66,3 @@ export class Sprite extends Component {
     window.ctx.restore();
   }
 }
-
-Sprite.defaultParams = {
-  size: new Vector(unitSize, unitSize),
-  spriteSize: new Vector(),
-  image: undefined,
-  flipX: false,
-  sprite: 0,
-};

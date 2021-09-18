@@ -2,18 +2,18 @@ import { range, createElement } from "../../utils";
 import { Component } from "../Component";
 import { Sprite } from "./Sprite";
 
-type Frames = {
-  from: number;
-  to: number;
-};
-
 const currentAnimationDebug = createElement("animation");
-export class Animation extends Component {
-  public readonly frames: Frames;
-  public readonly animations: any;
-  public readonly default: string;
 
-  public readonly animations2: Map<string, any>;
+interface AnimationsParams {
+  animations: {
+    [k: string]: { from: number; to: number; repeat?: boolean };
+  };
+  defaultAnimation: string;
+}
+
+export class Animation extends Component {
+  public readonly animations: any;
+  public readonly defaultAnimation: string;
 
   private lastTime: number;
   private sprite: Sprite;
@@ -22,9 +22,16 @@ export class Animation extends Component {
   private current: string;
   private old: string;
 
+  constructor({ animations, defaultAnimation }: AnimationsParams) {
+    super();
+
+    this.animations = animations;
+    this.defaultAnimation = defaultAnimation;
+  }
+
   init() {
     this.sprite = this.entity.getComponent(Sprite) as Sprite;
-    this.old = this.current = this.default;
+    this.old = this.current = this.defaultAnimation;
 
     this.lastTime = performance.now();
 
@@ -57,7 +64,7 @@ export class Animation extends Component {
   update(dt: number) {
     const time = performance.now();
 
-    if (!this.current) this.current = this.default;
+    if (!this.current) this.current = this.defaultAnimation;
 
     if (this.current !== this.old) {
       currentAnimationDebug.textContent = this.current;
@@ -75,7 +82,3 @@ export class Animation extends Component {
     this.current = "";
   }
 }
-
-Animation.defaultParams = {
-  frames: { from: 0, to: 3 },
-};

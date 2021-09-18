@@ -1,37 +1,41 @@
-import { Sprite, Animation, Collision } from "@/core/components";
+import Vector from "@/utils/Vector";
+import { Sprite, Animation } from "@/core/components";
 import { Entity } from "@/core/Entity";
 import { imageLoader } from "@/utils";
-import Vector from "@/utils/Vector";
-
-import { Coin } from "../scripts/Coin";
 
 const initCoin = async (name: string, position: Vector): Promise<Entity> => {
   const coin = new Entity(name, position);
 
-  coin.addComponent(Sprite, {
-    spriteSize: new Vector(8, 8),
-    size: new Vector(50, 50),
-    image: await imageLoader(await (await import("@/demo/assets")).coin),
-  });
+  coin.addComponent(
+    new Sprite({
+      image: await imageLoader(await (await import("@/demo/assets")).coin),
+      spriteSize: new Vector(8, 8),
+      size: new Vector(50, 50),
+    })
+  );
 
-  coin.addComponent(Animation, {
-    default: "idle",
-    animations: {
-      idle: {
-        from: 0,
-        to: 5,
-        repeat: true,
+  coin.addComponent(
+    new Animation({
+      defaultAnimation: "idle",
+      animations: {
+        idle: {
+          repeat: true,
+          from: 0,
+          to: 5,
+        },
       },
-    },
-  });
+    })
+  );
 
-  coin.addComponent(Collision, {
-    size: new Vector(50, 50),
-    trigger: true,
-    active: true,
-  });
+  // coin.addComponent(
+  //   new Collision({
+  //     size: new Vector(50, 50),
+  //     trigger: true,
+  //     active: true,
+  //   })
+  // );
 
-  coin.addComponent(Coin);
+  // coin.addComponent(new Coin());
 
   return coin;
 };

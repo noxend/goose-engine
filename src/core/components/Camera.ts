@@ -2,7 +2,6 @@ import Vector from "../../utils/Vector";
 import { Component } from "../Component";
 import { Entity } from "core/Entity";
 
-import { clamp } from "../../utils";
 export class Camera extends Component {
   public target: Entity;
   public smoothSpeed: number;
@@ -33,10 +32,10 @@ export class Camera extends Component {
   }
 }
 
-Camera.defaultParams = {
-  viewport: new Vector(900, 600),
-  max: new Vector(0, 0),
-  min: new Vector(0, 0),
-  smoothSpeed: 0.1,
-  target: null,
-};
+// Camera.defaultParams = {
+//   viewport: new Vector(900, 600),
+//   max: new Vector(0, 0),
+//   min: new Vector(0, 0),
+//   smoothSpeed: 0.1,
+//   target: null,
+// };

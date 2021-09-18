@@ -230,10 +230,10 @@ export class Collision extends Component {
   }
 }
 
-Collision.defaultParams = {
-  size: new Vector(100, 100),
-  center: new Vector(),
-  debug: false,
-  active: false,
-  trigger: false,
-};
+// Collision.defaultParams = {
+//   size: new Vector(100, 100),
+//   center: new Vector(),
+//   debug: false,
+//   active: false,
+//   trigger: false,
+// };
