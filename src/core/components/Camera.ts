@@ -2,12 +2,24 @@ import Vector from "../../utils/Vector";
 import { Component } from "../Component";
 import { Entity } from "core/Entity";
 
+interface CameraParams {
+  target: Entity;
+  smoothSpeed: number;
+}
+
 export class Camera extends Component {
-  public target: Entity;
-  public smoothSpeed: number;
   public viewport: Vector;
   public min: Vector;
   public max: Vector;
+  public smoothSpeed: number;
+  public target: Entity;
+
+  constructor({ target, smoothSpeed }: CameraParams) {
+    super();
+
+    this.smoothSpeed = smoothSpeed;
+    this.target = target;
+  }
 
   init() {
     this.viewport = new Vector(window.ctx.canvas.width, window.ctx.canvas.height);
@@ -31,11 +43,3 @@ export class Camera extends Component {
     this.entity.position.set(pos.x, pos.y);
   }
 }
-
-// Camera.defaultParams = {
-//   viewport: new Vector(900, 600),
-//   max: new Vector(0, 0),
-//   min: new Vector(0, 0),
-//   smoothSpeed: 0.1,
-//   target: null,
-// };

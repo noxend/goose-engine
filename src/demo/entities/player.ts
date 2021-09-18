@@ -16,7 +16,9 @@ const getPlayer = async (): Promise<Entity> => {
     })
   );
 
-  // player.addComponent(new Collision({ active: true }));
+  player.addComponent(
+    new Collision({ active: true, center: new Vector(), size: new Vector(100, 100) })
+  );
 
   player.addComponent(
     new Animation({

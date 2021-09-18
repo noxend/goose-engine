@@ -35,10 +35,10 @@ const main = async () => {
 
   const player = await initPlayer();
 
-  // const camera = new Entity("camera", new Vector());
-  // camera.addComponent(new Camera());
+  const camera = new Entity("camera", new Vector());
+  camera.addComponent(new Camera({ target: player, smoothSpeed: 0.1 }));
 
-  const entityManager = new EntityManager([...level, player]);
+  const entityManager = new EntityManager([...level, player, camera]);
 
   entityManager.init();
 
