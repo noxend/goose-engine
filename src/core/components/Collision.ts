@@ -35,8 +35,10 @@ export class Collision extends Component {
   public debug: boolean;
   public trigger: boolean;
 
-  constructor({ size, active, center, debug, trigger, ...params }: CollisionParams) {
-    super();
+  constructor(params: CollisionParams) {
+    super(params);
+
+    const { size, active, center, debug, trigger } = params;
 
     this.size = size;
     this.center = center;

@@ -13,8 +13,10 @@ export class AudioSource extends Component {
   public volume: number;
   public loop: boolean;
 
-  constructor({ src, loop = false, volume = 1 }: AudioSourceParams) {
-    super();
+  constructor(params: AudioSourceParams) {
+    super(params);
+
+    const { src, loop = false, volume = 1 } = params;
 
     this.volume = volume;
     this.loop = loop;

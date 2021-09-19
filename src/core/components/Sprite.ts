@@ -19,8 +19,10 @@ export class Sprite extends Component {
   public flipX: boolean;
   public size: Vector;
 
-  constructor({ image, spriteSize, size, flipX, sprite }: SpriteProps) {
-    super();
+  constructor(params: SpriteProps) {
+    super(params);
+
+    const { image, spriteSize, size, flipX, sprite } = params;
 
     this.image = image;
     this.spriteSize = spriteSize;

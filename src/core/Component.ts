@@ -6,8 +6,12 @@ export interface Component {
   init?(): void;
 }
 
-export class Component {
+export abstract class Component {
   public componentManager: ComponentManager;
   public entity: Entity;
-  public ID: number;
+  protected params: any;
+
+  public constructor(params?: any) {
+    this.params = params;
+  }
 }

@@ -25,7 +25,7 @@ export class Entity {
     return component;
   }
 
-  public getComponent(C: any) {
+  public getComponent(C: typeof Component) {
     for (const component of this.components) {
       if (component instanceof C) {
         return component;

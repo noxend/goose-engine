@@ -14,8 +14,10 @@ export class Camera extends Component {
   public smoothSpeed: number;
   public target: Entity;
 
-  constructor({ target, smoothSpeed }: CameraParams) {
-    super();
+  constructor(params: CameraParams) {
+    super(params);
+
+    const { target, smoothSpeed } = params;
 
     this.smoothSpeed = smoothSpeed;
     this.target = target;

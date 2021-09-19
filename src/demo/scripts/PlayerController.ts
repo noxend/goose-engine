@@ -18,10 +18,10 @@ export class PlayerController extends Component {
 
   public coins = 0;
 
-  constructor({ speed }: PlayerControllerParams) {
-    super();
+  constructor(params: PlayerControllerParams) {
+    super(params);
 
-    this.speed = speed;
+    this.speed = params.speed;
   }
 
   public init() {

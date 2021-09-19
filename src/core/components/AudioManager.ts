@@ -12,10 +12,10 @@ export class AudioManager extends Component {
 
   public sources: AudioManagerParams["sources"];
 
-  constructor({ sources }: AudioManagerParams) {
-    super();
+  constructor(params: AudioManagerParams) {
+    super(params);
 
-    this.sources = sources;
+    this.sources = params.sources;
   }
 
   public init(): void {

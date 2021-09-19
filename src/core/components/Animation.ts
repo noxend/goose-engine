@@ -23,7 +23,7 @@ export class Animation extends Component {
   private old: string;
 
   constructor({ animations, defaultAnimation }: AnimationsParams) {
-    super();
+    super({ animations, defaultAnimation });
 
     this.animations = animations;
     this.defaultAnimation = defaultAnimation;
