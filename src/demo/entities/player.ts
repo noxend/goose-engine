@@ -3,7 +3,7 @@ import { Animation, Sprite, AudioManager, Collision, RigidBody } from "@/core/co
 import { Entity } from "@/core/Entity";
 import { imageLoader } from "@/utils";
 
-import { PlayerController } from "../scripts/PlayerController";
+import { PlayerController } from "../components/PlayerController";
 
 const getPlayer = async (): Promise<Entity> => {
   const player = new Entity("player", new Vector(100, 100));
