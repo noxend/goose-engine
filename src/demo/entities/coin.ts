@@ -2,7 +2,7 @@ import Vector from "@/utils/Vector";
 import { Sprite, Animation, Collision } from "@/core/components";
 import { Entity } from "@/core/Entity";
 import { imageLoader } from "@/utils";
-import { Coin } from "../scripts/Coin";
+import { Coin } from "../components/Coin";
 
 const initCoin = async (name: string, position: Vector): Promise<Entity> => {
   const coin = new Entity(name, position);
