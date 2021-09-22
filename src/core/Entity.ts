@@ -31,7 +31,8 @@ export class Entity {
         return component;
       }
     }
-    throw new Error(`Component ${C.name} not found on Entity ${this.constructor.name}`);
+
+    // console.warn(`Component ${C.name} not found on Entity ${this.constructor.name}`);
   }
 
   public update(dt: number) {

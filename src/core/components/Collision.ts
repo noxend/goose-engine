@@ -1,4 +1,5 @@
 import EventEmitter from "eventemitter3";
+import { RigidBody } from ".";
 import { createElement } from "../../utils";
 import Vector from "../../utils/Vector";
 import { Component } from "../Component";
@@ -29,6 +30,7 @@ interface CollisionParams {
 export class Collision extends Component {
   public ee = new EventEmitter();
 
+  public rigidBody: RigidBody;
   public collision: Collision[];
   public center: Vector;
   public size: Vector;
@@ -50,6 +52,7 @@ export class Collision extends Component {
 
   init() {
     this.collision = this.componentManager.filterByType(Collision) as Collision[];
+    this.rigidBody = this.entity.getComponent(RigidBody) as RigidBody;
   }
 
   get top() {
@@ -207,14 +210,7 @@ export class Collision extends Component {
     const collisions: Collision[] = [];
     this.collision = this.componentManager.filterByType(Collision) as Collision[];
 
-    if (this.active) {
-      if (!this?.static) {
-        this.entity.velocity.y += 20 * dt;
-      }
-
-      this.entity.position.x += this.entity.velocity.x;
-      this.entity.position.y += this.entity.velocity.y;
-
+    if (this.rigidBody) {
       for (let i = 0; i < this.collision.length; i++) {
         if (this.collision[i] === this) continue;
 
@@ -241,7 +237,6 @@ export class Collision extends Component {
           }
         }
 
-        //             this.evens.emit("onTriggerEnter", this.collision[i]);
         this.ee.emit("onCollisionEnter", collisions);
       }
 
