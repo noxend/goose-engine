@@ -66,6 +66,8 @@ export class EntityManager {
   }
 
   public update(dt: number) {
+    window.ctx.save();
+
     while (this.entitiesToDestroy.length > 0) {
       const entity = this.entitiesToDestroy.pop()!;
       this.unregisterEntity(entity);
@@ -76,6 +78,8 @@ export class EntityManager {
       entity.oldPosition.y = entity.position.y;
       entity.update(dt);
     }
+
+    window.ctx.restore();
   }
 
   public init() {

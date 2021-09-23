@@ -41,19 +41,15 @@ export class Sprite extends Component {
   }
 
   update() {
-    const camera = this.entity.manager.entitiesByName.get("camera");
-
-    let x = this.entity.position.x;
-    let y = this.entity.position.y;
-
-    if (camera) {
-      x -= camera.position.x;
-      y -= camera.position.y;
-    }
-
     window.ctx.save();
-    window.ctx.translate(this.flipX ? x + this.size.x : x, y);
-    this.flipX && window.ctx.scale(-1, 1);
+
+    window.ctx.translate(
+      this.flipX ? this.entity.position.x + this.size.x : this.entity.position.x,
+      this.entity.position.y
+    );
+
+    window.ctx.scale(this.flipX ? -1 : 1, 1);
+
     window.ctx.drawImage(
       this.image,
       this.getByX(this.sprite),
@@ -65,6 +61,7 @@ export class Sprite extends Component {
       this.size.x,
       this.size.x
     );
+
     window.ctx.restore();
   }
 }
