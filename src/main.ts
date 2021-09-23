@@ -5,9 +5,8 @@ import { EntityManager } from "@/core/EntityManager";
 import initPlayer from "@/demo/entities/player";
 import loadLevel from "@/demo/levels";
 import { Camera } from "./core/components";
-import { Entity } from "./core/Entity";
-import initCoin from "./demo/entities/coin";
 import { createElement } from "./utils";
+import { Entity } from "./core/Entity";
 import Vector from "./utils/Vector";
 
 const canvas = document.querySelector<HTMLCanvasElement>("#canvas")!;
@@ -32,13 +31,13 @@ const fpsDebug = createElement("fps", "text");
 
 const main = async () => {
   const level = await loadLevel();
-
   const player = await initPlayer();
 
   const camera = new Entity("camera", new Vector());
   camera.addComponent(new Camera({ target: player, smoothSpeed: 0.1 }));
 
-  const entityManager = new EntityManager([...level, player, camera]);
+  const entityManager = new EntityManager([...level, camera]);
+  entityManager.add(player);
 
   entityManager.init();
 

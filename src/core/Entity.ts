@@ -8,10 +8,9 @@ export class Entity {
 
   public velocity = new Vector();
   public oldPosition = new Vector();
+  public transform: Vector;
 
   constructor(public name: string, public position: Vector) {}
-
-  public transform: Vector;
 
   public destroy() {
     this.manager.destroy(this);
@@ -19,9 +18,7 @@ export class Entity {
 
   public addComponent(component: Component) {
     component.entity = this;
-
     this.components.push(component);
-
     return component;
   }
 
@@ -31,8 +28,6 @@ export class Entity {
         return component;
       }
     }
-
-    // console.warn(`Component ${C.name} not found on Entity ${this.constructor.name}`);
   }
 
   public update(dt: number) {

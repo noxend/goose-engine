@@ -3,7 +3,7 @@ import { Component } from "./Component";
 export class ComponentManager {
   public components: Component[] = [];
 
-  public register(component: Component) {
+  public add(component: Component) {
     component.componentManager = this;
     this.components.push(component);
     return component;
