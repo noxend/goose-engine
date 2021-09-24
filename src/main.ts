@@ -5,9 +5,8 @@ import { EntityManager } from "@/core/EntityManager";
 import initPlayer from "@/demo/entities/player";
 import loadLevel from "@/demo/levels";
 import { Camera } from "./core/components";
-import { Entity } from "./core/Entity";
-import initCoin from "./demo/entities/coin";
 import { createElement } from "./utils";
+import { Entity } from "./core/Entity";
 import Vector from "./utils/Vector";
 
 const canvas = document.querySelector<HTMLCanvasElement>("#canvas")!;
@@ -15,30 +14,38 @@ const canvas = document.querySelector<HTMLCanvasElement>("#canvas")!;
 canvas.height = innerHeight;
 canvas.width = innerWidth;
 
+const ctx = canvas.getContext("2d")!;
+ctx.imageSmoothingEnabled = false;
+
 addEventListener("resize", () => {
   canvas.height = innerHeight;
   canvas.width = innerWidth;
-  window.ctx.imageSmoothingEnabled = false;
+  ctx.imageSmoothingEnabled = false;
 });
 
-window.ctx = canvas.getContext("2d")!;
-window.ctx.imageSmoothingEnabled = false;
-
 const clear = () => {
-  window.ctx.clearRect(0, 0, canvas.width, canvas.height);
+  ctx.clearRect(0, 0, canvas.width, canvas.height);
 };
 
 const fpsDebug = createElement("fps", "text");
 
 const main = async () => {
   const level = await loadLevel();
-
   const player = await initPlayer();
 
   const camera = new Entity("camera", new Vector());
-  camera.addComponent(new Camera({ target: player, smoothSpeed: 0.1 }));
+  const cameraComponent = new Camera({
+    viewport: new Vector(canvas.width, canvas.height),
+    target: player,
+    smoothSpeed: 4,
+  });
 
-  const entityManager = new EntityManager([...level, player, camera]);
+  camera.addComponent(cameraComponent);
+
+  const entityManager = new EntityManager([camera]);
+
+  entityManager.add([...level]);
+  entityManager.add(player);
 
   entityManager.init();
 
@@ -57,6 +64,7 @@ const main = async () => {
     fpsDebug.textContent = `FPS: ${fps.toFixed()}`;
 
     entityManager.update(deltaTime / 1000);
+    entityManager.draw(ctx);
 
     requestAnimationFrame(loop);
   };

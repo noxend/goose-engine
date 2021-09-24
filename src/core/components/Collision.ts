@@ -10,14 +10,6 @@ const position_y = createElement("position_x", "");
 const velocity_x = createElement("velocity_y", "");
 const velocity_y = createElement("velocity_y", "");
 
-// Collision.defaultParams = {
-//   size: new Vector(100, 100),
-//   center: new Vector(),
-//   debug: false,
-//   active: false,
-//   trigger: false,
-// };
-
 interface CollisionParams {
   size: Vector;
   center: Vector;
@@ -87,14 +79,14 @@ export class Collision extends Component {
     );
   }
 
-  draw() {
-    window.ctx.save();
-    window.ctx.beginPath();
-    window.ctx.translate(this.entity.position.x, this.entity.position.y);
-    window.ctx.rect(this.center.x, this.center.y, this.size.x, this.size.y);
-    window.ctx.strokeStyle = "yellow";
-    window.ctx.stroke();
-    window.ctx.restore();
+  private debugDraw(ctx: CanvasRenderingContext2D): void {
+    ctx.save();
+    ctx.beginPath();
+    ctx.translate(this.entity.position.x, this.entity.position.y);
+    ctx.rect(this.center.x, this.center.y, this.size.x, this.size.y);
+    ctx.strokeStyle = "yellow";
+    ctx.stroke();
+    ctx.restore();
   }
 
   public col: string[] = [];
@@ -248,9 +240,11 @@ export class Collision extends Component {
         velocity_y.textContent = `Vel Y: ${this.entity.velocity.y.toFixed(2)}`;
       }
     }
+  }
 
+  public draw(ctx: CanvasRenderingContext2D): void {
     if (this.debug) {
-      // this.draw();
+      this.debugDraw(ctx);
     }
   }
 }

@@ -1,7 +1,8 @@
-import { Sprite, Animation, AudioManager, Collision } from "@/core/components";
+import { Sprite, Animation, AudioManager, Collision, Camera } from "@/core/components";
 import Input, { Axis, KeyboardKey } from "@/core/Input";
 import { Component } from "@/core/Component";
 import { createElement } from "@/utils";
+import Vector from "@/utils/Vector";
 
 const coinsDebug = createElement("coins", `0`);
 
@@ -65,6 +66,12 @@ export class PlayerController extends Component {
   }
 
   public addCoin(): void {
+    const cameraComponent = this.entity.manager.entitiesByName
+      .get("camera")
+      ?.getComponent(Camera) as Camera;
+
+    cameraComponent.shake(new Vector(10, 10), 0.2);
+
     this.audioManager.play("coin");
     this.coins++;
   }

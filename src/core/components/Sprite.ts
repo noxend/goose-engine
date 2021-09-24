@@ -1,8 +1,5 @@
 import Vector from "../../utils/Vector";
 import { Component } from "../Component";
-import { Camera } from "./Camera";
-
-const unitSize = 100;
 
 interface SpriteProps {
   size: Vector;
@@ -31,30 +28,26 @@ export class Sprite extends Component {
     this.sprite = sprite || 0;
   }
 
-  getByX = (i: number) => (i * this.spriteSize.x) % this.image.width;
+  public getByX = (i: number): number => (i * this.spriteSize.x) % this.image.width;
 
-  getByY = (i: number) =>
+  public getByY = (i: number): number =>
     Math.trunc((i * this.spriteSize.x) / this.image.width) * this.spriteSize.y;
 
-  setSprite(value: number) {
+  public setSprite(value: number) {
     this.sprite = value;
   }
 
-  update() {
-    const camera = this.entity.manager.entitiesByName.get("camera");
+  public draw(ctx: CanvasRenderingContext2D): void {
+    ctx.save();
 
-    let x = this.entity.position.x;
-    let y = this.entity.position.y;
+    ctx.translate(
+      this.flipX ? this.entity.position.x + this.size.x : this.entity.position.x,
+      this.entity.position.y
+    );
 
-    if (camera) {
-      x -= camera.position.x;
-      y -= camera.position.y;
-    }
+    ctx.scale(this.flipX ? -1 : 1, 1);
 
-    window.ctx.save();
-    window.ctx.translate(this.flipX ? x + this.size.x : x, y);
-    this.flipX && window.ctx.scale(-1, 1);
-    window.ctx.drawImage(
+    ctx.drawImage(
       this.image,
       this.getByX(this.sprite),
       this.getByY(this.sprite),
@@ -65,6 +58,7 @@ export class Sprite extends Component {
       this.size.x,
       this.size.x
     );
-    window.ctx.restore();
+
+    ctx.restore();
   }
 }

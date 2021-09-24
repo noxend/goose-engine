@@ -86,14 +86,11 @@ export default class Vector {
     return new Vector(a.x + (b.x - a.x) * n, a.y + (b.y - a.y) * n);
   }
 
-  static distance = (vec1: Vector, vec2: Vector): number =>
-    Vector.calculateDist(vec1, vec2);
+  static distance = (vec1: Vector, vec2: Vector): number => Vector.calculateDist(vec1, vec2);
 
-  static sub = (vec1: Vector, vec2: Vector): Vector =>
-    new Vector(vec1.x - vec2.x, vec1.y - vec2.y);
+  static sub = (vec1: Vector, vec2: Vector): Vector => new Vector(vec1.x - vec2.x, vec1.y - vec2.y);
 
-  static add = (vec1: Vector, vec2: Vector): Vector =>
-    new Vector(vec1.x + vec2.x, vec1.y + vec2.y);
+  static add = (vec1: Vector, vec2: Vector): Vector => new Vector(vec1.x + vec2.x, vec1.y + vec2.y);
 
   static get right(): Vector {
     return new Vector(1, 0);
@@ -101,6 +98,10 @@ export default class Vector {
 
   static get up(): Vector {
     return new Vector(0, 1);
+  }
+
+  static get zero(): Vector {
+    return new Vector(0, 0);
   }
 
   // internal methods
