@@ -1,4 +1,5 @@
 import EventEmitter from "eventemitter3";
+import { RigidBody } from ".";
 import { createElement } from "../../utils";
 import Vector from "../../utils/Vector";
 import { Component } from "../Component";
@@ -9,19 +10,41 @@ const position_y = createElement("position_x", "");
 const velocity_x = createElement("velocity_y", "");
 const velocity_y = createElement("velocity_y", "");
 
+interface CollisionParams {
+  size: Vector;
+  center: Vector;
+  debug?: boolean;
+  active?: boolean;
+  trigger?: boolean;
+  static?: boolean;
+}
+
 export class Collision extends Component {
+  public ee = new EventEmitter();
+
+  public rigidBody: RigidBody;
   public collision: Collision[];
-  public evens: EventEmitter;
   public center: Vector;
   public size: Vector;
-  private debug: boolean;
+  public debug: boolean;
+  public trigger: boolean;
 
-  awake() {
-    this.evens = new EventEmitter();
+  constructor(params: CollisionParams) {
+    super(params);
+
+    const { size, active, center, debug, trigger } = params;
+
+    this.size = size;
+    this.center = center;
+    this.trigger = trigger || false;
+    this.debug = debug || false;
+    this.active = active || false;
+    this.static = params.static || false;
   }
 
   init() {
-    this.collision = this.manager.filterByType(Collision) as Collision[];
+    this.collision = this.componentManager.filterByType(Collision) as Collision[];
+    this.rigidBody = this.entity.getComponent(RigidBody) as RigidBody;
   }
 
   get top() {
@@ -56,14 +79,14 @@ export class Collision extends Component {
     );
   }
 
-  draw() {
-    window.ctx.save();
-    window.ctx.beginPath();
-    window.ctx.translate(this.entity.position.x, this.entity.position.y);
-    window.ctx.rect(this.center.x, this.center.y, this.size.x, this.size.y);
-    window.ctx.strokeStyle = "yellow";
-    window.ctx.stroke();
-    window.ctx.restore();
+  private debugDraw(ctx: CanvasRenderingContext2D): void {
+    ctx.save();
+    ctx.beginPath();
+    ctx.translate(this.entity.position.x, this.entity.position.y);
+    ctx.rect(this.center.x, this.center.y, this.size.x, this.size.y);
+    ctx.strokeStyle = "yellow";
+    ctx.stroke();
+    ctx.restore();
   }
 
   public col: string[] = [];
@@ -115,8 +138,7 @@ export class Collision extends Component {
         this.bottom > target.top
       ) {
         this.entity.velocity.x = 0;
-        this.entity.oldPosition.x = this.entity.position.x =
-          target.left - this.size.x;
+        this.entity.oldPosition.x = this.entity.position.x = target.left - this.size.x;
 
         return true;
       }
@@ -138,8 +160,7 @@ export class Collision extends Component {
         this.right > target.left
       ) {
         this.entity.velocity.y = 0;
-        this.entity.oldPosition.y = this.entity.position.y =
-          target.top - this.size.y;
+        this.entity.oldPosition.y = this.entity.position.y = target.top - this.size.y;
 
         return true;
       }
@@ -173,30 +194,19 @@ export class Collision extends Component {
 
   public active: boolean;
   public static: boolean;
-  public trigger: boolean;
   public type: string;
+
+  public triggered = false;
 
   update(dt: number) {
     const collisions: Collision[] = [];
+    this.collision = this.componentManager.filterByType(Collision) as Collision[];
 
-    const camera = this.entity.manager.entitiesByName.get("camera")!;
-
-    // let x = this.entity.position.x;
-    // let y = this.entity.position.y;
-
-    // x -= camera.position.x;
-    // y -= camera.position.y;
-
-    if (this.active) {
-      if (!this?.static) {
-        this.entity.velocity.y += 50 * dt;
-      }
-
-      this.entity.position.x += this.entity.velocity.x;
-      this.entity.position.y += this.entity.velocity.y;
-
+    if (this.rigidBody) {
       for (let i = 0; i < this.collision.length; i++) {
         if (this.collision[i] === this) continue;
+
+        const collision = this.collision[i];
 
         if (!this?.collision[i]?.trigger) {
           if (this.collision[i]?.type === "left") {
@@ -206,11 +216,20 @@ export class Collision extends Component {
           }
         }
 
-        if (this.rectangleCollisionDetector(this.collision[i])) {
-          collisions.push(this.collision[i]);
+        if (this.rectangleCollisionDetector(collision)) {
+          collisions.push(collision);
+
+          if (collision.trigger && !collision.triggered) {
+            collision.triggered = true;
+            collision.ee.emit("onTriggerEnter", this);
+          }
+        } else {
+          if (collision.trigger && collision.triggered) {
+            collision.triggered = false;
+          }
         }
 
-        this.evens.emit("onCollisionEnter", collisions);
+        this.ee.emit("onCollisionEnter", collisions);
       }
 
       if (this.entity.name === "player") {
@@ -221,16 +240,11 @@ export class Collision extends Component {
         velocity_y.textContent = `Vel Y: ${this.entity.velocity.y.toFixed(2)}`;
       }
     }
+  }
 
+  public draw(ctx: CanvasRenderingContext2D): void {
     if (this.debug) {
-      // this.draw();
+      this.debugDraw(ctx);
     }
   }
 }
-
-Collision.defaultParams = {
-  size: new Vector(100, 100),
-  center: new Vector(),
-  debug: false,
-  active: false,
-};

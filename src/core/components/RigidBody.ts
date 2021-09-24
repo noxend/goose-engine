@@ -1,29 +1,25 @@
-import Vector from "../../utils/Vector";
 import { Component } from "../Component";
-import { Collision } from "./Collision";
+
+export interface RigidBodyParams {
+  mass: number;
+  gravityForce: number;
+}
 
 export class RigidBody extends Component {
   public mass: number;
   public gravityForce: number;
-  public velocity: Vector;
 
-  private collision: Collision;
+  constructor(params: RigidBodyParams) {
+    super(params);
 
-  public init() {
-    this.collision = this.entity.getComponent(Collision) as Collision;
-    this.collision.evens.on("onCollisionEnter", this.onCollisionEnter);
+    const { gravityForce, mass } = params;
+
+    this.mass = mass;
+    this.gravityForce = gravityForce;
   }
-
-  private onCollisionEnter = (collision: Collision[]) => {};
 
   public update(dt: number) {
-    // this.velocity.y += (this.gravityForce / this.mass) * dt;
-    // this.entity.position.y += this.velocity.y;
+    this.entity.velocity.y += this.gravityForce * this.mass * dt;
+    this.entity.position.y += this.entity.velocity.y * dt;
   }
 }
-
-RigidBody.defaultParams = {
-  mass: 1,
-  gravityForce: 10,
-  velocity: new Vector(0, 0),
-};

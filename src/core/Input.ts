@@ -10,6 +10,7 @@ export enum KeyboardKey {
   D = "d",
   W = "w",
   S = "s",
+  G = "g",
 }
 
 export enum Axis {
@@ -39,39 +40,23 @@ abstract class Input {
 
   public static getAxis(axis: Axis) {
     if (axis === Axis.HORIZONTAL) {
-      if (
-        Input.isKeyPressed(KeyboardKey.ARROW_RIGHT) ||
-        Input.isKeyPressed(KeyboardKey.D)
-      )
+      if (Input.isKeyPressed(KeyboardKey.ARROW_RIGHT) || Input.isKeyPressed(KeyboardKey.D))
         return 1;
-      if (
-        Input.isKeyPressed(KeyboardKey.ARROW_LEFT) ||
-        Input.isKeyPressed(KeyboardKey.A)
-      )
+      if (Input.isKeyPressed(KeyboardKey.ARROW_LEFT) || Input.isKeyPressed(KeyboardKey.A))
         return -1;
     }
 
     if (axis === Axis.VERTICAL) {
-      if (
-        Input.isKeyPressed(KeyboardKey.ARROW_DOWN) ||
-        Input.isKeyPressed(KeyboardKey.S)
-      )
-        return 1;
-      if (
-        Input.isKeyPressed(KeyboardKey.ARROW_UP) ||
-        Input.isKeyPressed(KeyboardKey.W)
-      )
-        return -1;
+      if (Input.isKeyPressed(KeyboardKey.ARROW_DOWN) || Input.isKeyPressed(KeyboardKey.S)) return 1;
+      if (Input.isKeyPressed(KeyboardKey.ARROW_UP) || Input.isKeyPressed(KeyboardKey.W)) return -1;
     }
 
     return 0;
   }
 
-  public static isKeyPressed = (key: KeyboardKey) =>
-    Input.keyboardKeys.has(key);
+  public static isKeyPressed = (key: KeyboardKey) => Input.keyboardKeys.has(key);
 
-  private static transformKeyName = (key: string) =>
-    key.toLocaleLowerCase() as KeyboardKey;
+  private static transformKeyName = (key: string) => key.toLocaleLowerCase() as KeyboardKey;
 }
 
 export default Input._initialize();

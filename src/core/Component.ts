@@ -1,25 +1,18 @@
 import { Entity } from "./Entity";
 import { ComponentManager } from "./ComponentManager";
 
-export class Component {
-  public ID: number;
-  static defaultParams: any;
+export abstract class Component {
+  public componentManager: ComponentManager;
+  public entity: Entity;
+  protected params: any;
 
-  constructor(
-    public entity: Entity,
-    public manager: ComponentManager,
-    params: any
-  ) {
-    this.awake();
-    for (const key in params) {
-      if (Object.prototype.hasOwnProperty.call(params, key)) {
-        // @ts-ignore
-        this[key] = params[key];
-      }
-    }
+  public constructor(params?: any) {
+    this.params = params;
   }
 
-  awake() {}
-  init() {}
-  update(dt: number) {}
+  public update(dt: number): void {}
+
+  public init(): void {}
+
+  public draw(ctx: CanvasRenderingContext2D): void {}
 }

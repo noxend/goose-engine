@@ -3,35 +3,48 @@ import { EntityManager } from "./EntityManager";
 import { Component } from "./Component";
 
 export class Entity {
-  public components: Map<typeof Component, Component>;
+  public components: Component[] = [];
+  public manager: EntityManager;
 
   public velocity = new Vector();
   public oldPosition = new Vector();
-
-  constructor(
-    public name: string,
-    public manager: EntityManager,
-    public position: Vector
-  ) {
-    this.components = new Map();
-  }
-
   public transform: Vector;
+
+  constructor(public name: string, public position: Vector) {}
 
   public destroy() {
     this.manager.destroy(this);
   }
 
-  public addComponent(C: typeof Component, params?: any) {
-    this.manager.addComponentToEntity(this, C, params);
-    return this;
+  public addComponent(component: Component) {
+    component.entity = this;
+    this.components.push(component);
+    return component;
   }
 
   public getComponent(C: typeof Component) {
-    return this.components.get(C);
+    for (const component of this.components) {
+      if (component instanceof C) {
+        return component;
+      }
+    }
   }
 
   public update(dt: number) {
-    this.components.forEach((c) => c.update(dt));
+    for (const component of this.components) {
+      component.update(dt);
+    }
+  }
+
+  public init() {
+    for (const component of this.components) {
+      component.init();
+    }
+  }
+
+  public draw(ctx: CanvasRenderingContext2D) {
+    for (const component of this.components) {
+      component.draw(ctx);
+    }
   }
 }
