@@ -1,14 +1,14 @@
 import Vector from "../../utils/Vector";
 import { Component } from "../Component";
+import { Sprite } from "../components";
 import { Entity } from "core/Entity";
 import { clamp } from "@/utils";
-import Input, { Axis } from "../Input";
-import { Sprite } from "../components";
 
 interface CameraParams {
   target: Entity;
   smoothSpeed: number;
   viewport: Vector;
+  backgroundColor?: string;
 }
 
 export class Camera extends Component {
@@ -18,6 +18,7 @@ export class Camera extends Component {
   public smoothSpeed: number;
   public target: Entity;
   public offset: number = 300;
+  public backgroundColor: string = "#89f2ff";
 
   private sprite: Sprite;
 
@@ -30,10 +31,11 @@ export class Camera extends Component {
   constructor(params: CameraParams) {
     super(params);
 
-    const { target, smoothSpeed, viewport } = params;
+    const { target, smoothSpeed, viewport, backgroundColor } = params;
 
-    this.viewport = viewport;
+    this.backgroundColor = this.backgroundColor ?? backgroundColor;
     this.smoothSpeed = smoothSpeed;
+    this.viewport = viewport;
     this.target = target;
   }
 
@@ -79,6 +81,9 @@ export class Camera extends Component {
   }
 
   public draw(ctx: CanvasRenderingContext2D) {
+    // ctx.fillStyle = this.backgroundColor;
+    // ctx.fillRect(0, 0, this.viewport.x, this.viewport.y);
+
     ctx.scale(1, 1);
     ctx.translate(
       -this.entity.position.x + this.shakePos.x,

@@ -76,7 +76,3 @@ export class PlayerController extends Component {
     this.coins++;
   }
 }
-
-// PlayerController.defaultParams = {
-//   speed: 400,
-// };
