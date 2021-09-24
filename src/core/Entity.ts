@@ -32,13 +32,19 @@ export class Entity {
 
   public update(dt: number) {
     for (const component of this.components) {
-      component.update && component.update(dt);
+      component.update(dt);
     }
   }
 
   public init() {
     for (const component of this.components) {
-      component.init && component.init();
+      component.init();
+    }
+  }
+
+  public draw(ctx: CanvasRenderingContext2D) {
+    for (const component of this.components) {
+      component.draw(ctx);
     }
   }
 }

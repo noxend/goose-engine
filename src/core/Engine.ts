@@ -13,10 +13,8 @@ class Engine {
     this.canvas.height = innerHeight;
     this.canvas.width = innerWidth;
 
-    const ctx = this.canvas.getContext("2d")!;
-    ctx.imageSmoothingEnabled = false;
-
-    window.ctx = this.ctx = ctx;
+    this.ctx = this.canvas.getContext("2d")!;
+    this.ctx.imageSmoothingEnabled = false;
 
     addEventListener("resize", this.resizeHandler);
 
@@ -27,7 +25,7 @@ class Engine {
   private resizeHandler() {
     this.canvas.height = innerHeight;
     this.canvas.width = innerWidth;
-    window.ctx.imageSmoothingEnabled = this.ctx.imageSmoothingEnabled = false;
+    this.ctx.imageSmoothingEnabled = this.ctx.imageSmoothingEnabled = false;
   }
 
   public addScene(scene: Scene) {
@@ -38,6 +36,8 @@ class Engine {
     this.scenes.set(scene.name, scene);
   }
 
+  private loop(): void {}
+
   public init(): void {
     this.update();
   }
@@ -45,6 +45,8 @@ class Engine {
   public update(): void {
     requestAnimationFrame(this.update.bind(this));
   }
+
+  public draw(): void {}
 }
 
 export default Engine;

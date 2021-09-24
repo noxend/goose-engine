@@ -65,9 +65,7 @@ export class EntityManager {
     this.entitiesToDestroy.push(entity);
   }
 
-  public update(dt: number) {
-    window.ctx.save();
-
+  public update(dt: number): void {
     while (this.entitiesToDestroy.length > 0) {
       const entity = this.entitiesToDestroy.pop()!;
       this.unregisterEntity(entity);
@@ -78,13 +76,21 @@ export class EntityManager {
       entity.oldPosition.y = entity.position.y;
       entity.update(dt);
     }
-
-    window.ctx.restore();
   }
 
-  public init() {
+  public init(): void {
     for (const entity of this.entities) {
       entity.init();
     }
+  }
+
+  public draw(ctx: CanvasRenderingContext2D): void {
+    ctx.save();
+
+    for (const entity of this.entities) {
+      entity.draw(ctx);
+    }
+
+    ctx.restore();
   }
 }
