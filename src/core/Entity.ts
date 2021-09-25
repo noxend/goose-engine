@@ -1,10 +1,10 @@
 import Vector from "../utils/Vector";
-import { EntityManager } from "./EntityManager";
+import { Scene } from "./Scene";
 import { Component } from "./Component";
 
 export class Entity {
   public components: Component[] = [];
-  public manager: EntityManager;
+  public scene: Scene;
 
   public velocity = new Vector();
   public oldPosition = new Vector();
@@ -13,7 +13,7 @@ export class Entity {
   constructor(public name: string, public position: Vector) {}
 
   public destroy() {
-    this.manager.destroy(this);
+    this.scene.destroy(this);
   }
 
   public addComponent(component: Component) {

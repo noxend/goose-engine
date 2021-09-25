@@ -66,7 +66,7 @@ export class PlayerController extends Component {
   }
 
   public addCoin(): void {
-    const cameraComponent = this.entity.manager.entitiesByName
+    const cameraComponent = this.entity.scene.entitiesByName
       .get("camera")
       ?.getComponent(Camera) as Camera;
 

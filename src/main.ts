@@ -1,6 +1,6 @@
 // import "./sandbox";
 
-import { EntityManager } from "@/core/EntityManager";
+import { Scene } from "@/core/Scene";
 
 import initPlayer from "@/demo/entities/player";
 import loadLevel from "@/demo/levels";
@@ -42,12 +42,10 @@ const main = async () => {
 
   camera.addComponent(cameraComponent);
 
-  const entityManager = new EntityManager([camera]);
-
-  entityManager.add([...level]);
-  entityManager.add(player);
-
-  entityManager.init();
+  const scene = new Scene("root", [camera]);
+  scene.add([...level]);
+  scene.add(player);
+  scene.init();
 
   let deltaTime = 0;
   let lastUpdate = 0;
@@ -63,8 +61,8 @@ const main = async () => {
     fps = Math.round(1 / (deltaTime / 1000));
     fpsDebug.textContent = `FPS: ${fps.toFixed()}`;
 
-    entityManager.update(deltaTime / 1000);
-    entityManager.draw(ctx);
+    scene.update(deltaTime / 1000);
+    scene.draw(ctx);
 
     requestAnimationFrame(loop);
   };
