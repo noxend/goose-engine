@@ -1,4 +1,4 @@
-// import "./sandbox";
+import "./core/ecs/test";
 
 import { Scene } from "@/core/Scene";
 

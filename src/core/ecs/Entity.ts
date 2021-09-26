@@ -7,7 +7,7 @@ export class Entity {
   public components: Component[] = [];
   public componentsToRemove: Component[] = [];
 
-  constructor(public _name: string, components: Component[]) {}
+  constructor(public _name: string, components: Component[] = []) {}
 
   public get name(): string {
     return this._name;

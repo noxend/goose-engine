@@ -9,6 +9,7 @@ export class EntityManager {
 
   public add(entity: Entity): void {
     this.entities.push(entity);
+    this.world.queryManager.addEntity(entity);
   }
 
   public remove(entity: Entity): void {
