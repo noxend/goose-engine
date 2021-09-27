@@ -9,7 +9,9 @@ export class World {
   public entityManager = new EntityManager(this);
   public systemManager = new SystemManager(this);
 
-  public update(dt: number): void {}
+  public update(dt: number): void {
+    this.systemManager.update(dt);
+  }
 
   public add(entity: Entity): void;
   public add(system: System): void;

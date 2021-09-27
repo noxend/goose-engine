@@ -3,7 +3,7 @@ import { Entity } from "./Entity";
 import { Utils } from "./Utils";
 
 export class Query {
-  private entities: Entity[] = [];
+  public entities: Entity[] = [];
 
   private _key: string;
 
@@ -17,6 +17,17 @@ export class Query {
   constructor(public components: typeof Component[] = []) {}
 
   public addEntity(entity: Entity): void {
-    this.entities.push(entity);
+    if (!this.entities.includes(entity) && this.matches(entity)) this.entities.push(entity);
+  }
+
+  public matches(entity: Entity) {
+    let matches = true;
+
+    for (const cls of this.components) {
+      matches = matches && entity.components.some((instance) => instance instanceof cls);
+      if (!matches) return false;
+    }
+
+    return matches;
   }
 }

@@ -16,7 +16,9 @@ export class SystemManager {
 
   public update(dt: number): void {
     for (const system of this.systems) {
-      system.update([], dt);
+      const { entities } = this.world.queryManager.getQuery(system.components);
+
+      system.update(entities, dt);
     }
   }
 }

@@ -15,22 +15,20 @@ export class QueryManager {
     }
   }
 
-  private addQuery(query: Query): void {
+  public getQuery(components: typeof Component[]) {
+    const key = Utils.generateKey(components);
+    return this.queries[key];
+  }
+
+  public createQuery(components: typeof Component[]) {
+    const query = new Query(components);
+
     this.queries[Utils.generateKey(query.components)] = query;
 
     for (const entity of this.world.entityManager.entities) {
       query.addEntity(entity);
     }
-  }
 
-  public getQuery(components: typeof Component[]) {
-    const key = Utils.generateKey(components);
-    if (this.queries[key]) return this.queries[key];
-  }
-
-  public createQuery(components: typeof Component[]) {
-    const query = new Query(components);
-    this.addQuery(query);
     return query;
   }
 }
